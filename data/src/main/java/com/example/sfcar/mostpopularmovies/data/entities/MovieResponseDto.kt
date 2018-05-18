@@ -1,4 +1,4 @@
-package com.example.sfcar.mostpopularmovies.data.entities.base
+package com.example.sfcar.mostpopularmovies.data.entities
 
 data class MovieResponseDto(val poster_path: String?,
                             val adult: Boolean?,

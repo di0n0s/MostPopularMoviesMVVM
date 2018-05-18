@@ -1,6 +1,6 @@
 package com.example.sfcar.mostpopularmovies.data.repository.datasource
 
-import com.example.sfcar.mostpopularmovies.data.entities.base.MovieListResponseDto
+import com.example.sfcar.mostpopularmovies.data.entities.MovieListResponseDto
 import io.reactivex.Observable
 
 interface MoviesDataStore {
