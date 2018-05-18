@@ -8,7 +8,7 @@ import com.example.sfcar.mostpopularmovies.injector.modules.ApplicationModule
 class MostPopularMoviesApplication : Application() {
 
     companion object {
-        lateinit var instance : MostPopularMoviesApplication
+        lateinit var instance: MostPopularMoviesApplication
         @JvmStatic
         lateinit var applicationComponent: ApplicationComponent
     }
