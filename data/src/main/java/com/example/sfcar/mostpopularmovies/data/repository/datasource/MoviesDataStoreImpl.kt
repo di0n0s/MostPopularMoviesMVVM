@@ -5,9 +5,8 @@ import com.example.sfcar.mostpopularmovies.data.net.MoviesApiService
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class MoviesDataStoreImpl @Inject constructor(private val moviesApiService: MoviesApiService): MoviesDataStore{
+class MoviesDataStoreImpl @Inject constructor(private val moviesApiService: MoviesApiService) : MoviesDataStore {
 
-    override fun getPopularMovies(page: Int): Observable<MovieListResponseDto> {
-        return moviesApiService.getPopularMovies(page)
-    }
+    override fun getPopularMovies(page: Int): Observable<MovieListResponseDto> = moviesApiService.getPopularMovies(page)
+
 }
