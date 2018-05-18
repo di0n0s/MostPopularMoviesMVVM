@@ -43,6 +43,10 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.14.1'
     implementation 'com.google.dagger:dagger:2.14.1'
 
+    //Rx
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+
+
 
     implementation project(':domain')
 }
