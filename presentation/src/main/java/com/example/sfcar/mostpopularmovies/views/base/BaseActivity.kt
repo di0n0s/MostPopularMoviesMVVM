@@ -3,6 +3,7 @@ package com.example.sfcar.mostpopularmovies.views.base
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import com.example.sfcar.mostpopularmovies.MostPopularMoviesApplication
 import com.example.sfcar.mostpopularmovies.R
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
+        setupActivityComponent()
         initializeFragmentAndTAG(savedInstanceState)
         beginTransaction()
     }
@@ -38,6 +40,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun beginTransaction() =
             supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, currentFragment, currentTag).commit()
+
+    private fun setupActivityComponent() {
+        MostPopularMoviesApplication
+                .applicationComponent
+                .inject(this)
+    }
+
 
     abstract fun createFragmentAndSettingTAG()
 
