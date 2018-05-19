@@ -8,7 +8,7 @@ import io.reactivex.observers.DisposableObserver
 
 abstract class BaseUseCase<T>(private val disposables: CompositeDisposable = CompositeDisposable()) {
 
-    protected fun execute(params: Params, observer: DisposableObserver<T>) {
+    fun execute(params: Params, observer: DisposableObserver<T>) {
         val observable: Observable<T> = buildUseCaseObservable(params)
         addDisposable(observable.subscribeWith(observer))
     }
