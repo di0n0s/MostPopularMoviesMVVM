@@ -12,13 +12,18 @@ import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseFragmentModule
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseListModule
 import com.example.sfcar.mostpopularmovies.injector.modules.MostPopularMoviesModule
+import com.example.sfcar.mostpopularmovies.presenters.MostPopularMoviesPresenterImp
 import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  *
  */
-class MostPopularMoviesFragment : BaseFragment() {
+class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
+
+    @Inject
+    lateinit var presenter: MostPopularMoviesPresenterImp
 
     companion object {
         fun newInstance() = MostPopularMoviesFragment()
@@ -31,12 +36,35 @@ class MostPopularMoviesFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_most_popular_movies, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.start()
+
+    }
+
     override fun setupFragmentComponent() {
         MostPopularMoviesApplication
                 .applicationComponent
-                .plus(BaseFragmentModule(this.context!!), BaseListModule(this.context!!), MostPopularMoviesModule())
+                .plus(BaseFragmentModule(this.context!!), BaseListModule(this.context!!), MostPopularMoviesModule(this))
                 .inject(this)
     }
 
+    override fun showProgressBar(show: Boolean) {
+    }
 
+    override fun showRecyclerView() {
+        showToastMessage("OK")
+    }
+
+    override fun hideRecyclerView() {
+    }
+
+    override fun hideEmptyView() {
+    }
+
+    override fun showEmptyView() {
+    }
+
+    override fun setRefreshingState(state: Boolean) {
+    }
 }
