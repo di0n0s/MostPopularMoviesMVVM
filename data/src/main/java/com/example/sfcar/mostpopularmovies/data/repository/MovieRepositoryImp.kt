@@ -1,6 +1,6 @@
 package com.example.sfcar.mostpopularmovies.data.repository
 
-import com.example.sfcar.mostpopularmovies.data.entities.mapper.MovieListResponseMapper
+import com.example.sfcar.mostpopularmovies.data.model.mapper.MovieListResponseMapper
 import com.example.sfcar.mostpopularmovies.data.repository.datasource.MoviesDataStore
 import com.example.sfcar.mostpopularmovies.domain.model.Movie
 import com.example.sfcar.mostpopularmovies.domain.repository.MovieRepository

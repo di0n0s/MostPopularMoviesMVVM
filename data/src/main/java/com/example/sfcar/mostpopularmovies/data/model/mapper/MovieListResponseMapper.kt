@@ -1,6 +1,6 @@
-package com.example.sfcar.mostpopularmovies.data.entities.mapper
+package com.example.sfcar.mostpopularmovies.data.model.mapper
 
-import com.example.sfcar.mostpopularmovies.data.entities.MovieListResponseDto
+import com.example.sfcar.mostpopularmovies.data.model.MovieListResponseDto
 import com.example.sfcar.mostpopularmovies.domain.model.Movie
 
 object MovieListResponseMapper {

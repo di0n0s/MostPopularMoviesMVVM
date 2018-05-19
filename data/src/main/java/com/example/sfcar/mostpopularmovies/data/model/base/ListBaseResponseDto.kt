@@ -1,4 +1,4 @@
-package com.example.sfcar.mostpopularmovies.data.entities.base
+package com.example.sfcar.mostpopularmovies.data.model.base
 
 open class ListBaseResponseDto<T>(val page: Int = 0,
                                   val results: List<T>? = null,
