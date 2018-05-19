@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MostPopularMovies</string>
+    <string name="most_popular_movies_empty_title">There are no movies</string>
+    <string name="most_popular_movies_empty_subtitle">Pull to refresh the list</string>
 </resources>
