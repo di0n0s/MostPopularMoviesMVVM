@@ -16,11 +16,7 @@ class MostPopularMoviesHolder(itemView: View?, private val adapterListener: Adap
     fun bindMovie(movie: MovieViewModel) {
 //        setTextViewsTexts(movie)
         setPoster(movie)
-        setOnClickListener()
-    }
-
-    private fun setOnClickListener() {
-        adapterListener.onItemSelected(adapterPosition, itemView)
+        itemView.setOnClickListener { adapterListener.onItemSelected(adapterPosition, itemView) }
     }
 
 //    private fun setTextViewsTexts(movie: MovieViewModel) {
