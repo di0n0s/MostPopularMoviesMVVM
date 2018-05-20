@@ -12,4 +12,5 @@ interface BaseListView {
     fun setItems()
     fun bringContext(): Context
     fun setRefreshingBehaviour()
+    fun setEmptyView()
 }

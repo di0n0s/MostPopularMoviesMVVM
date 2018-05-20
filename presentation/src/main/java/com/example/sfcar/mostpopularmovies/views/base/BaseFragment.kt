@@ -23,7 +23,5 @@ abstract class BaseFragment : Fragment() {
 
     protected abstract fun setupFragmentComponent()
 
-    protected abstract fun setEmptyView()
-
 
 }

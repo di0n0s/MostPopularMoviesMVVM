@@ -5,9 +5,13 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.sfcar.mostpopularmovies.MostPopularMoviesApplication
 import com.example.sfcar.mostpopularmovies.R
+import com.example.sfcar.mostpopularmovies.navigation.Navigator
+import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    @Inject
+    protected lateinit var navigator: Navigator
     protected var currentTag: String? = null
     protected var currentFragment: Fragment? = null
 

@@ -15,9 +15,12 @@ import com.example.sfcar.mostpopularmovies.adapters.MostPopularMoviesAdapter
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseFragmentModule
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseListModule
 import com.example.sfcar.mostpopularmovies.injector.modules.MostPopularMoviesModule
+import com.example.sfcar.mostpopularmovies.interfaces.AdapterListOnClickListener
+import com.example.sfcar.mostpopularmovies.interfaces.MostPopularMoviesActivityListener
 import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
+import com.example.sfcar.mostpopularmovies.model.MovieViewModel
 import com.example.sfcar.mostpopularmovies.model.enumerations.EmptyViewModel
-import com.example.sfcar.mostpopularmovies.presenters.MostPopularMoviesPresenterImp
+import com.example.sfcar.mostpopularmovies.presenters.mostPopularMovies.MostPopularMoviesPresenterImp
 import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_most_popular_movies.*
 import javax.inject.Inject
@@ -26,12 +29,14 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  *
  */
-class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
+class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, AdapterListOnClickListener.ViewListener {
 
     @Inject
     lateinit var presenter: MostPopularMoviesPresenterImp
     @Inject
     lateinit var layoutManager: GridLayoutManager
+    @Inject
+    lateinit var actitivyListener: MostPopularMoviesActivityListener
 
     companion object {
         fun newInstance() = MostPopularMoviesFragment()
@@ -57,7 +62,9 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
     override fun setupFragmentComponent() {
         MostPopularMoviesApplication
                 .applicationComponent
-                .plus(BaseFragmentModule(this.context!!), BaseListModule(this.context!!), MostPopularMoviesModule(this))
+                .plus(BaseFragmentModule(this.context!!),
+                        BaseListModule(this.context!!),
+                        MostPopularMoviesModule(this, activity as MostPopularMoviesActivity))
                 .inject(this)
     }
 
@@ -101,6 +108,10 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
         emptyView.fillViews(EmptyViewModel.EMPTY_MOST_POPULAR_MOVIES)
     }
 
+    override fun onItemSelected(position: Int, view: View) {
+        actitivyListener.goToMovieDetailActivity(presenter.model[position] as MovieViewModel, view)
+    }
+
     private fun setRecyclerView() {
         setLayoutManager()
         setScrollListener()
@@ -117,7 +128,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
 
     private fun initAdapter(model: List<BaseMovieViewModel>) {
         if (mostPopularMoviesRecyclerView.adapter == null)
-            mostPopularMoviesRecyclerView.adapter = MostPopularMoviesAdapter(model)
+            mostPopularMoviesRecyclerView.adapter = MostPopularMoviesAdapter(model, this)
     }
 
     private fun setScrollListener() {

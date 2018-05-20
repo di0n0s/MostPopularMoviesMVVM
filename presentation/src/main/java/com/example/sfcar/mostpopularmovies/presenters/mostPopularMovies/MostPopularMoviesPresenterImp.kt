@@ -1,4 +1,4 @@
-package com.example.sfcar.mostpopularmovies.presenters
+package com.example.sfcar.mostpopularmovies.presenters.mostPopularMovies
 
 import com.example.sfcar.mostpopularmovies.domain.interactor.params.MostPopularMoviesParams
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.GetPopularMoviesUseCase
