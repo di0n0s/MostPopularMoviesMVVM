@@ -6,7 +6,7 @@ import android.os.Parcelable
 open class MovieViewModel(var title: String = "",
                           var releaseDate: String = "",
                           var overview: String = "",
-                          var picturePath: String = "") : Parcelable {
+                          var picturePath: String = "") : BaseMovieViewModel(), Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
