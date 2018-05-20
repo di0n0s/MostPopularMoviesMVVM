@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
     tools:context="com.example.sfcar.mostpopularmovies.views.movieDetail.MovieDetailActivity">
 
@@ -20,14 +20,19 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="24dp"
+            app:expandedTitleMarginStart="24dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="true">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
 
             <ImageView
-                android:id="@+id/tvShowBackdrop"
+                android:id="@+id/movieBackdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"

@@ -6,10 +6,15 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.example.sfcar.mostpopularmovies.MostPopularMoviesApplication
 import com.example.sfcar.mostpopularmovies.R
+import com.example.sfcar.mostpopularmovies.injector.modules.BaseFragmentModule
+import com.example.sfcar.mostpopularmovies.injector.modules.MovieDetailModule
 import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.presenters.movieDetail.MovieDetailPresenterImp
 import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import javax.inject.Inject
 
 
 /**
@@ -17,6 +22,9 @@ import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
  *
  */
 class MovieDetailFragment : BaseFragment() {
+
+    @Inject
+    lateinit var presenter: MovieDetailPresenterImp
 
     companion object {
         const val TAG = "MovieDetailFragment"
@@ -30,6 +38,11 @@ class MovieDetailFragment : BaseFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.setModel(arguments?.getParcelable(ARG_MOVIE)!!)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -38,14 +51,20 @@ class MovieDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setTextViews()
 
     }
 
     override fun setupFragmentComponent() {
+        MostPopularMoviesApplication
+                .applicationComponent
+                .plus(BaseFragmentModule(this.context!!), MovieDetailModule())
+                .inject(this)
     }
 
-    private fun setTextViews(){
-
+    private fun setTextViews() {
+        movieDateTextView.text = presenter.movieViewModel.releaseDate
+        movieOverviewTextView.text = presenter.movieViewModel.overview
     }
 
 }

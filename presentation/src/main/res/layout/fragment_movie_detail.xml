@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context="com.example.sfcar.mostpopularmovies.views.movieDetail.MovieDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="@color/colorPrimary"
         android:elevation="3dp"
         android:orientation="vertical"
         android:padding="20dp"
@@ -22,7 +22,7 @@
             android:text="@string/movie_detail_overview_tite" />
 
         <TextView
-            android:id="@+id/overview"
+            android:id="@+id/movieOverviewTextView"
             style="@style/MovieDetailFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@android:color/white"
+        android:background="@color/colorPrimary"
         android:elevation="3dp"
         android:orientation="horizontal"
         android:padding="20dp"
@@ -43,11 +43,11 @@
         <TextView
             style="@style/MovieDetailTitleStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="28dp"
             android:text="@string/movie_detail_release_year_title" />
 
         <TextView
-            android:id="@+id/releaseYearTextView"
+            android:id="@+id/movieDateTextView"
             style="@style/MovieDetailFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

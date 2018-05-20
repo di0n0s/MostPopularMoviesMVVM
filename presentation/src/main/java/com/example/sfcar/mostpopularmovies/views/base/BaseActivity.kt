@@ -21,9 +21,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeFragmentAndTAG(savedInstanceState)
         setContentView(R.layout.activity_base)
         setupActivityComponent()
-        initializeFragmentAndTAG(savedInstanceState)
         beginTransaction()
     }
 
@@ -51,6 +51,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 .inject(this)
     }
 
+    abstract fun setToolbarTitle()
 
     abstract fun createFragmentAndSettingTAG()
 

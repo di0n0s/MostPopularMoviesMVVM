@@ -13,6 +13,7 @@ interface ApplicationComponent {
 
     fun plus(baseFragmentModule: BaseFragmentModule, baseListModule: BaseListModule, mostPopularMoviesModule: MostPopularMoviesModule): MostPopularMoviesComponent
 
+    fun plus(baseFragmentModule: BaseFragmentModule, movieDetailModule: MovieDetailModule) : MovieDetailComponent
 
 
 }

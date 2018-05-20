@@ -12,6 +12,10 @@ class MostPopularMoviesActivity : BaseActivity(), MostPopularMoviesActivityListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbarTitle()
+    }
+
+    override fun setToolbarTitle() {
         toolbar.setTitle(R.string.most_popular_movies_toolbar_title)
     }
 

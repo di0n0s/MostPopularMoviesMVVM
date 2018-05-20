@@ -14,16 +14,9 @@ import kotlinx.android.synthetic.main.list_item_movie.view.*
 class MostPopularMoviesHolder(itemView: View?, private val adapterListener: AdapterListOnClickListener.AdapterListener) : RecyclerView.ViewHolder(itemView) {
 
     fun bindMovie(movie: MovieViewModel) {
-//        setTextViewsTexts(movie)
         setPoster(movie)
         itemView.setOnClickListener { adapterListener.onItemSelected(adapterPosition, itemView) }
     }
-
-//    private fun setTextViewsTexts(movie: MovieViewModel) {
-//        itemView.movieTitleTextView.text = movie.title
-//        itemView.movieDateTextView.text = movie.releaseDate
-//        itemView.movieOverviewTextView.text = movie.overview
-//    }
 
     private fun setPoster(movie: MovieViewModel) {
         if (movie.picturePath != "") {
@@ -33,10 +26,6 @@ class MostPopularMoviesHolder(itemView: View?, private val adapterListener: Adap
                     .apply(RequestOptions().placeholder(R.drawable.img_empty_documentos))
                     .listener(CustomRequestListener(itemView))
                     .into(itemView.moviePoster as ImageView)
-        } /*else {
-            GlideApp.with(itemView.context)
-                    .load(R.drawable.img_empty_documentos)
-                    .into(itemView.moviePoster as ImageView)
-        }*/
+        }
     }
 }

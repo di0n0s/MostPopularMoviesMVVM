@@ -2,12 +2,22 @@ package com.example.sfcar.mostpopularmovies.views.movieDetail
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
+import android.transition.Slide
+import android.widget.ImageView
+import com.bumptech.glide.request.RequestOptions
 import com.example.sfcar.mostpopularmovies.R
+import com.example.sfcar.mostpopularmovies.glide.CustomRequestListener
+import com.example.sfcar.mostpopularmovies.glide.GlideApp
 import com.example.sfcar.mostpopularmovies.model.MovieViewModel
 import com.example.sfcar.mostpopularmovies.views.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : BaseActivity() {
+
+    private lateinit var viewModel: MovieViewModel
 
     companion object {
         private const val EXTRA_MOVIE = "ExtraMovie"
@@ -21,7 +31,11 @@ class MovieDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initActivityTransitions()
         setContentView(R.layout.activity_movie_detail)
+        setToolbarTitle()
+        setToolbarImage()
+        initSupportActionBar()
     }
 
     override fun createFragmentAndSettingTAG() {
@@ -29,6 +43,40 @@ class MovieDetailActivity : BaseActivity() {
         currentFragment = MovieDetailFragment.newInstance(getMovieExtra())
     }
 
-    private fun getMovieExtra(): MovieViewModel = intent.getParcelableExtra(EXTRA_MOVIE)
+    private fun getMovieExtra(): MovieViewModel {
+        viewModel = intent.getParcelableExtra(EXTRA_MOVIE)
+        return viewModel
+    }
 
+    override fun setToolbarTitle() {
+        collapsingToolbar.title = viewModel.title
+    }
+
+    private fun initSupportActionBar() {
+        setSupportActionBar(toolbar)
+        if (supportActionBar != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+        }
+    }
+
+    private fun initActivityTransitions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val transition = Slide()
+            transition.excludeTarget(android.R.id.statusBarBackground, true)
+            window.enterTransition = transition
+            window.returnTransition = transition
+        }
+    }
+
+    private fun setToolbarImage() {
+        if (viewModel.picturePath != "") {
+            GlideApp.with(this)
+                    .load(viewModel.picturePath)
+                    .apply(RequestOptions().centerInside())
+                    .apply(RequestOptions().placeholder(R.drawable.img_empty_documentos))
+                    .listener(CustomRequestListener(findViewById(R.id.progressBar)))
+                    .into(movieBackdrop as ImageView)
+        }
+    }
 }
