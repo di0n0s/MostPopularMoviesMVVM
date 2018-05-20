@@ -47,7 +47,9 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
-//        setSpanSize()
+        setSpanSize()
+        setEmptyView()
+        setRefreshingBehaviour()
         presenter.start()
 
     }
@@ -72,6 +74,13 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
         } else progressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    override fun setRefreshingBehaviour() {
+        swipeRefreshLayout.setOnRefreshListener {
+            presenter.isLoading = true
+            presenter.start()
+        }
+    }
+
     override fun showRecyclerView() {
         mostPopularMoviesRecyclerView.visibility = View.VISIBLE
     }
@@ -86,10 +95,6 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
 
     override fun showEmptyView() {
         emptyView.visibility = View.VISIBLE
-    }
-
-    override fun setRefreshingOff() {
-        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun setEmptyView() {
@@ -130,18 +135,19 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
         })
     }
 
-//    private fun setSpanSize() {
-//        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//            override fun getSpanSize(position: Int): Int {
-//                val adapter = mostPopularMoviesRecyclerView.adapter
-//                return when (adapter.getItemViewType(position)) {
-//                    MostPopularMoviesAdapter.MOVIE_TYPE -> 1
-//                    else -> 3
-//                }
-//            }
-//
-//        }
-//    }
+    private fun setSpanSize() {
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val adapter = mostPopularMoviesRecyclerView.adapter
+                return when (adapter.getItemViewType(position)) {
+                    MostPopularMoviesAdapter.MOVIE_TYPE -> 1
+                    MostPopularMoviesAdapter.FOOTER_TYPE -> 3
+                    else -> -1
+                }
+            }
+
+        }
+    }
 
     private fun setLayoutManager() {
         mostPopularMoviesRecyclerView.layoutManager = layoutManager

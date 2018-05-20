@@ -9,7 +9,7 @@ interface BaseListView {
     fun hideRecyclerView()
     fun hideEmptyView()
     fun showEmptyView()
-    fun setRefreshingOff()
     fun setItems()
     fun bringContext(): Context
+    fun setRefreshingBehaviour()
 }

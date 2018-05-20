@@ -46,7 +46,6 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     override fun onErrorReceived() {
         view.showEmptyView()
         view.hideRecyclerView()
-        view.setRefreshingOff()
         view.showProgressBar(false)
     }
 
@@ -82,7 +81,6 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     private fun manageViewAfterOK() {
         view.setItems()
         showOrHideEmptyAndRecyclerView()
-        view.setRefreshingOff()
         isLoading = false
         view.showProgressBar(false)
     }
