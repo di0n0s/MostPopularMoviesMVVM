@@ -8,7 +8,6 @@ import com.example.sfcar.mostpopularmovies.domain.model.MovieListPagination
 import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.MovieListPaginationViewModel
 import com.example.sfcar.mostpopularmovies.model.MovieViewModel
-import com.example.sfcar.mostpopularmovies.utils.Constant
 
 object MovieListPaginationViewModelMapper {
 
@@ -28,9 +27,9 @@ object MovieListPaginationViewModelMapper {
 
     private fun setYearString(context: Context, releaseDate: String): String {
         return if (releaseDate.isNotBlank())
-            "${context.getString(R.string.release_year)}${Constant.SPACE}${releaseDateToYear(releaseDate)}"
+            releaseDateToYear(releaseDate).toString()
         else
-            "${context.getString(R.string.release_year)}${Constant.SPACE}${context.getString(R.string.unknown_date)}"
+            context.getString(R.string.unknown_date)
     }
 
     private fun setPictureUrl(picturePath: String): String =

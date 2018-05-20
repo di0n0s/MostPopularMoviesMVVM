@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.transition.Slide
+import android.view.MenuItem
 import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 import com.example.sfcar.mostpopularmovies.R
@@ -50,6 +50,13 @@ class MovieDetailActivity : BaseActivity() {
 
     override fun setToolbarTitle() {
         collapsingToolbar.title = viewModel.title
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initSupportActionBar() {

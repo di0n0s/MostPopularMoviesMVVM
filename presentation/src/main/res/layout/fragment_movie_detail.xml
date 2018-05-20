@@ -36,23 +36,24 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
         android:elevation="3dp"
+        android:layout_gravity="center"
         android:orientation="horizontal"
         android:padding="20dp"
         tools:targetApi="lollipop">
 
         <TextView
             style="@style/MovieDetailTitleStyle"
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
             android:text="@string/movie_detail_release_year_title" />
 
         <TextView
             android:id="@+id/movieDateTextView"
-            style="@style/MovieDetailFieldStyle"
-            android:layout_width="match_parent"
+            style="@style/MovieDetailTitleStyle"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:textSize="15sp" />
+            tools:text="2017"/>
     </LinearLayout>
 
 </LinearLayout>

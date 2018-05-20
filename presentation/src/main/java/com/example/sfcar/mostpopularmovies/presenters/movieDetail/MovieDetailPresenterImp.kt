@@ -15,13 +15,10 @@ class MovieDetailPresenterImp @Inject constructor() : MovieDetailPresenter {
 
     override fun start() {}
 
-    override fun onResume() {
-    }
+    override fun onResume() {}
 
-    override fun onPause() {
-    }
+    override fun onPause() {}
 
-    override fun onDestroy() {
-    }
+    override fun onDestroy() {}
 
 }

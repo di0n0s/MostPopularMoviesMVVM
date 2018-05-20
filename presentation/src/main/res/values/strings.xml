@@ -6,6 +6,6 @@
     <string name="movie_transition_poster">movieTransitionPoster</string>
     <string name="unknown_date">Unknown Date</string>
     <string name="most_popular_movies_toolbar_title">Most Popular Movies</string>
-    <string name="movie_detail_release_year_title">Release year:</string>
+    <string name="movie_detail_release_year_title">Release year</string>
     <string name="movie_detail_overview_tite">Overview</string>
 </resources>

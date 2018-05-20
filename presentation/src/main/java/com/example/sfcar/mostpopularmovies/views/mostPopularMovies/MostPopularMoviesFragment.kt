@@ -56,7 +56,26 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         setEmptyView()
         setRefreshingBehaviour()
         presenter.start()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mostPopularMoviesRecyclerView.adapter = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
     }
 
     override fun setupFragmentComponent() {
