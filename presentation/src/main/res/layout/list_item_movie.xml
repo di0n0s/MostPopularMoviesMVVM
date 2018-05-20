@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    card_view:cardBackgroundColor="@color/colorPrimary"
+    card_view:cardCornerRadius="@dimen/card_corner_radius"
+    card_view:cardElevation="@dimen/card_elevation">
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <ImageView
+        android:id="@+id/moviePoster"
+        style="@style/MoviePoster"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        tools:ignore="ContentDescription" />
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/rippleEffectLinearLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@drawable/ripple_effect"-->
+    <!--android:orientation="horizontal" />-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toEndOf="@id/moviePoster"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/movieTitleTextView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--tools:text="The Devil wears Prada" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/movieDateTextView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--tools:text="12th of May" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/movieOverviewTextView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--tools:text="rjgbjb jkvhnikvn" />-->
+    <!--</LinearLayout>-->
+    <!--</RelativeLayout>-->
+
+
+</android.support.v7.widget.CardView>

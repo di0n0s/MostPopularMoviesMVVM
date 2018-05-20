@@ -8,7 +8,7 @@
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         tools:visibility="gone" />
 
@@ -26,6 +26,13 @@
                 android:id="@+id/mostPopularMoviesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <!--<ProgressBar-->
+            <!--android:id="@+id/progressPaginationBar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="bottom|center"-->
+            <!--tools:visibility="visible" />-->
 
             <com.example.sfcar.mostpopularmovies.views.customViews.EmptyView
                 android:id="@+id/emptyView"

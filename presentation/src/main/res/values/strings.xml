@@ -2,4 +2,8 @@
     <string name="app_name">MostPopularMovies</string>
     <string name="most_popular_movies_empty_title">There are no movies</string>
     <string name="most_popular_movies_empty_subtitle">Pull to refresh the list</string>
+    <string name="release_year">Release Year:</string>
+    <string name="movie_transition_poster">movieTransitionPoster</string>
+    <string name="unknown_date">Unknown Date</string>
+    <string name="most_popular_movies_toolbar_title">Most Popular Movies</string>
 </resources>
