@@ -6,6 +6,7 @@ interface BaseListPresenter<T> : BasePresenter<T> {
     fun loadEndlessData()
     fun setIsLastPage(currentPage: Int, pagesNumber: Int)
     fun addFooter()
+    var isLoading: Boolean
     var page: Int
     var isLastPage: Boolean
     var loadEndlessData: Boolean

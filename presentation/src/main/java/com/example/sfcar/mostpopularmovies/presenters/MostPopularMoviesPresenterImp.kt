@@ -4,21 +4,22 @@ import com.example.sfcar.mostpopularmovies.domain.interactor.params.MostPopularM
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.GetPopularMoviesUseCase
 import com.example.sfcar.mostpopularmovies.domain.model.MovieListPagination
 import com.example.sfcar.mostpopularmovies.injector.PerFragment
+import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.FooterMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.MovieListPaginationViewModel
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
 import com.example.sfcar.mostpopularmovies.model.mapper.MovieListPaginationViewModelMapper
 import com.example.sfcar.mostpopularmovies.observers.MostPopularMoviesObserver
 import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesView
 import javax.inject.Inject
 
 @PerFragment
-class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: GetPopularMoviesUseCase) : MostPopularMoviesPresenter<MovieViewModel> {
+class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: GetPopularMoviesUseCase) : MostPopularMoviesPresenter<BaseMovieViewModel> {
 
-    override var model: ArrayList<MovieViewModel> = ArrayList()
-    override var page: Int = 1
+    override var model: ArrayList<BaseMovieViewModel> = ArrayList()
+    override var page: Int = 0
     override var loadEndlessData: Boolean = false
     override var isLastPage: Boolean = false
+    override var isLoading: Boolean = false
     @Inject
     lateinit var view: MostPopularMoviesView
 
@@ -27,11 +28,11 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     }
 
     override fun getPopularMovies() {
-        useCase.execute(MostPopularMoviesParams(page), MostPopularMoviesObserver(this))
+        useCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this))
     }
 
     override fun onMovieListReceived(movieList: MovieListPagination) {
-        val movieListPaginationViewModel = MovieListPaginationViewModelMapper.turnInto(movieList)
+        val movieListPaginationViewModel = MovieListPaginationViewModelMapper.turnInto(movieList, view.bringContext())
         if (!loadEndlessData) {
             model = movieListPaginationViewModel.movieList
             setIsLastPage(movieListPaginationViewModel.currentPage, movieListPaginationViewModel.pagesNumber)
@@ -45,12 +46,12 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     override fun onErrorReceived() {
         view.showEmptyView()
         view.hideRecyclerView()
-        view.setRefreshingState(false)
+        view.setRefreshingOff()
         view.showProgressBar(false)
     }
 
     override fun loadData() {
-        page = 1
+        page = 0
         loadEndlessData = false
         getPopularMovies()
     }
@@ -72,15 +73,17 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     private fun removeFooterAndConcat(movieListPaginationViewModel: MovieListPaginationViewModel) {
         model.removeAll { it is FooterMovieViewModel }
         model.addAll(movieListPaginationViewModel.movieList)
-        if (movieListPaginationViewModel.pagesNumber != 1 && movieListPaginationViewModel.pagesNumber != movieListPaginationViewModel.currentPage)
+        if (movieListPaginationViewModel.pagesNumber != 0 && movieListPaginationViewModel.pagesNumber != movieListPaginationViewModel.currentPage)
             addFooter()
         else
             isLastPage = true
     }
 
     private fun manageViewAfterOK() {
+        view.setItems()
         showOrHideEmptyAndRecyclerView()
-        view.setRefreshingState(false)
+        view.setRefreshingOff()
+        isLoading = false
         view.showProgressBar(false)
     }
 
