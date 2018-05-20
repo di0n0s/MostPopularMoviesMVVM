@@ -1,11 +1,5 @@
 package com.example.sfcar.mostpopularmovies.views.mostPopularMovies
 
-interface MostPopularMoviesView {
+import com.example.sfcar.mostpopularmovies.views.base.BaseListView
 
-    fun showProgressBar(show: Boolean)
-    fun showRecyclerView()
-    fun hideRecyclerView()
-    fun hideEmptyView()
-    fun showEmptyView()
-    fun setRefreshingState(state: Boolean)
-}
+interface MostPopularMoviesView : BaseListView

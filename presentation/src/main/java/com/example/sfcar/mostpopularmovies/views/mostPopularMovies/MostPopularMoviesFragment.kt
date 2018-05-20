@@ -1,6 +1,7 @@
 package com.example.sfcar.mostpopularmovies.views.mostPopularMovies
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
@@ -9,11 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sfcar.mostpopularmovies.MostPopularMoviesApplication
-
 import com.example.sfcar.mostpopularmovies.R
+import com.example.sfcar.mostpopularmovies.adapters.MostPopularMoviesAdapter
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseFragmentModule
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseListModule
 import com.example.sfcar.mostpopularmovies.injector.modules.MostPopularMoviesModule
+import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.enumerations.EmptyViewModel
 import com.example.sfcar.mostpopularmovies.presenters.MostPopularMoviesPresenterImp
 import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
@@ -30,7 +32,6 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
     lateinit var presenter: MostPopularMoviesPresenterImp
     @Inject
     lateinit var layoutManager: StaggeredGridLayoutManager
-    private var loading: Boolean = true
 
     companion object {
         fun newInstance() = MostPopularMoviesFragment()
@@ -53,8 +54,14 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
     override fun setupFragmentComponent() {
         MostPopularMoviesApplication
                 .applicationComponent
-                .plus(BaseFragmentModule(this.context!!), BaseListModule(), MostPopularMoviesModule(this))
+                .plus(BaseFragmentModule(this.context!!), BaseListModule(this.context!!), MostPopularMoviesModule(this))
                 .inject(this)
+    }
+
+    override fun bringContext(): Context = this.context!!
+
+    override fun setItems() {
+        setAdapter(presenter.model)
     }
 
     override fun showProgressBar(show: Boolean) {
@@ -80,7 +87,8 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
         emptyView.visibility = View.VISIBLE
     }
 
-    override fun setRefreshingState(state: Boolean) {
+    override fun setRefreshingOff() {
+        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun setEmptyView() {
@@ -92,31 +100,39 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
         setScrollListener()
     }
 
+    private fun setAdapter(model: List<BaseMovieViewModel>) {
+        initAdapter(model)
+        notifyDataSetChanged()
+    }
+
+    private fun notifyDataSetChanged() {
+        mostPopularMoviesRecyclerView.adapter.notifyDataSetChanged()
+    }
+
+    private fun initAdapter(model: List<BaseMovieViewModel>) {
+        if (mostPopularMoviesRecyclerView.adapter == null)
+            mostPopularMoviesRecyclerView.adapter = MostPopularMoviesAdapter(model)
+    }
+
     private fun setScrollListener() {
         mostPopularMoviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0) {
-                    val visibleItemCount = layoutManager.childCount
-                    val totalItemCount = layoutManager.itemCount
-                    var pastVisibleItems = 0
-                    var firstVisibleItems: IntArray? = null
-                    firstVisibleItems = layoutManager.findFirstVisibleItemPositions(firstVisibleItems)
-                    if (firstVisibleItems != null && firstVisibleItems.isNotEmpty()) {
-                        pastVisibleItems = firstVisibleItems[0]
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                var pastVisibleItems = 0
+                var firstVisibleItems: IntArray? = null
+                firstVisibleItems = layoutManager.findFirstVisibleItemPositions(firstVisibleItems)
+                if (firstVisibleItems != null && firstVisibleItems.isNotEmpty()) {
+                    pastVisibleItems = firstVisibleItems[0]
+                }
+                if (!presenter.isLastPage && !presenter.isLoading) {
+                    if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                        presenter.isLoading = true
+                        presenter.loadEndlessData()
+                    }
 
-                    }
-                    if (loading) {
-                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            loading = false
-                            presenter.getPopularMovies()
-                        }
-                    }
-                }/* else if (layoutManager.findFirstVisibleItemPositions() == mostPopularMoviesRecyclerView.adapter.itemCount - 1
-                            && !notificationsListPresenter?.isLastPage!!) {
-                        notificationsListPresenter?.loadEndlessData()
-                        loading = true
-                    }*/
+                }
             }
         })
     }
