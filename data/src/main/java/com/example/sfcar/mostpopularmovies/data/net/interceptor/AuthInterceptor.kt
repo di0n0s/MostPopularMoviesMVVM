@@ -21,7 +21,7 @@ class AuthInterceptor @Inject constructor() : Interceptor {
 
         url = urlBuilder?.build()
         request = request?.newBuilder()?.url(url)?.build()
-        println("URl -> " + request?.url())
+        println("URL -> " + request?.url())
         return chain?.proceed(request)!!
     }
 
