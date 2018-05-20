@@ -4,8 +4,8 @@ package com.example.sfcar.mostpopularmovies.views.mostPopularMovies
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +31,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
     @Inject
     lateinit var presenter: MostPopularMoviesPresenterImp
     @Inject
-    lateinit var layoutManager: StaggeredGridLayoutManager
+    lateinit var layoutManager: GridLayoutManager
 
     companion object {
         fun newInstance() = MostPopularMoviesFragment()
@@ -47,6 +47,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+//        setSpanSize()
         presenter.start()
 
     }
@@ -117,25 +118,30 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView {
     private fun setScrollListener() {
         mostPopularMoviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                var pastVisibleItems = 0
-                var firstVisibleItems: IntArray? = null
-                firstVisibleItems = layoutManager.findFirstVisibleItemPositions(firstVisibleItems)
-                if (firstVisibleItems != null && firstVisibleItems.isNotEmpty()) {
-                    pastVisibleItems = firstVisibleItems[0]
-                }
-                if (!presenter.isLastPage && !presenter.isLoading) {
-                    if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                val lastItem = layoutManager.findLastCompletelyVisibleItemPosition()
+                val currentTotalCount = layoutManager.itemCount
+                if (currentTotalCount <= lastItem + layoutManager.spanCount) {
+                    if (!presenter.isLastPage && !presenter.isLoading) {
                         presenter.isLoading = true
                         presenter.loadEndlessData()
                     }
-
                 }
             }
         })
     }
+
+//    private fun setSpanSize() {
+//        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//            override fun getSpanSize(position: Int): Int {
+//                val adapter = mostPopularMoviesRecyclerView.adapter
+//                return when (adapter.getItemViewType(position)) {
+//                    MostPopularMoviesAdapter.MOVIE_TYPE -> 1
+//                    else -> 3
+//                }
+//            }
+//
+//        }
+//    }
 
     private fun setLayoutManager() {
         mostPopularMoviesRecyclerView.layoutManager = layoutManager

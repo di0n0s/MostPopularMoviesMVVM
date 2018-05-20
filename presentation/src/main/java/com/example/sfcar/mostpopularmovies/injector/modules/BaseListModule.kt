@@ -1,8 +1,8 @@
 package com.example.sfcar.mostpopularmovies.injector.modules
 
 import android.content.Context
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
 import com.example.sfcar.mostpopularmovies.injector.PerFragment
 import dagger.Module
 import dagger.Provides
@@ -12,7 +12,7 @@ class BaseListModule(private val context: Context) {
 
     @Provides
     @PerFragment
-    fun provideStaggeredGridLayoutManager(): StaggeredGridLayoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+    fun provideGridLayoutManager(): GridLayoutManager = GridLayoutManager(context, 3)
 
     @Provides
     @PerFragment

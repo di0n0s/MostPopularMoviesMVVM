@@ -12,16 +12,17 @@ import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMo
 class MostPopularMoviesAdapter(private val movieList: List<BaseMovieViewModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private const val MOVIE_TYPE = 1
-        private const val FOOTER_TYPE = 0
+        const val MOVIE_TYPE = 1
+        const val FOOTER_TYPE = 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             when (viewType) {
                 MOVIE_TYPE ->
                     MostPopularMoviesHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_movie, parent, false))
-                else ->
+                else -> {
                     MostPopularMoviesFooterHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_movie_footer, parent, false))
+                }
 
             }
 
