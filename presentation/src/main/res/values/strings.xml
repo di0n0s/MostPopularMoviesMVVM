@@ -14,4 +14,5 @@
     <string name="error_request_parameters_incorret">Your request parameters are incorrect</string>
     <string name="error_id_invalid">The pre-requisite id is invalid or not found</string>
     <string name="error_network_connection">There is an error with connection</string>
+    <string name="movie_search_hint">Find a movie…</string>
 </resources>

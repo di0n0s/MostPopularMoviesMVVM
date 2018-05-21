@@ -101,7 +101,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         if (swipeRefreshLayout.isRefreshing) {
             if (!show)
                 swipeRefreshLayout.isRefreshing = false
-        } else progressBar.visibility = if (show) View.VISIBLE else View.GONE
+        }
     }
 
     override fun setRefreshingBehaviour() {
