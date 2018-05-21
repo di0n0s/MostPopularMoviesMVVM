@@ -12,4 +12,7 @@ class MovieRepositoryImp @Inject constructor(private val moviesDataStore: Movies
     override fun getPopularMovies(page: Int): Observable<MovieListPagination> =
             moviesDataStore.getPopularMovies(page).map { MovieListResponseMapper.toPaginationViewModel(it) }
 
+    override fun searchMovies(page: Int, query: String): Observable<MovieListPagination> =
+            moviesDataStore.searchMovies(page, query).map { MovieListResponseMapper.toPaginationViewModel(it) }
+
 }

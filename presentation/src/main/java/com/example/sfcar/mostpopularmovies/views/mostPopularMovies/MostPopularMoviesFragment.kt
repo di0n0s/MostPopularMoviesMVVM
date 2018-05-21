@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import com.example.sfcar.mostpopularmovies.model.enumerations.EmptyViewModel
 import com.example.sfcar.mostpopularmovies.presenters.mostPopularMovies.MostPopularMoviesPresenterImp
 import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_most_popular_movies.*
+import rx.Subscription
 import javax.inject.Inject
 
 /**
@@ -36,7 +38,8 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
     @Inject
     lateinit var layoutManager: GridLayoutManager
     @Inject
-    lateinit var actitivyListener: MostPopularMoviesActivityListener
+    lateinit var activityListener: MostPopularMoviesActivityListener
+    private var subscription: Subscription? = null
 
     companion object {
         fun newInstance() = MostPopularMoviesFragment()
@@ -55,6 +58,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         setSpanSize()
         setEmptyView()
         setRefreshingBehaviour()
+        setSearchListener()
         presenter.start()
     }
 
@@ -75,6 +79,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
 
     override fun onDestroy() {
         super.onDestroy()
+        subscription?.unsubscribe()
         presenter.onDestroy()
     }
 
@@ -132,12 +137,16 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
     }
 
     override fun onItemSelected(position: Int, view: View) {
-        actitivyListener.goToMovieDetailActivity(presenter.model[position] as MovieViewModel, view)
+        activityListener.goToMovieDetailActivity(presenter.model[position] as MovieViewModel, view)
     }
 
     private fun setRecyclerView() {
         setLayoutManager()
         setScrollListener()
+    }
+
+    override fun setNullAdapter() {
+        mostPopularMoviesRecyclerView.adapter = null
     }
 
     private fun setAdapter(model: List<BaseMovieViewModel>) {
@@ -157,13 +166,19 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
     private fun setScrollListener() {
         mostPopularMoviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                val lastItem = layoutManager.findLastCompletelyVisibleItemPosition()
-                val currentTotalCount = layoutManager.itemCount
-                if (currentTotalCount <= lastItem + layoutManager.spanCount) {
-                    if (!presenter.isLastPage && !presenter.isLoading) {
-                        presenter.isLoading = true
-                        presenter.loadEndlessData()
+                if (dy > 0) {
+                    val lastItem = layoutManager.findLastCompletelyVisibleItemPosition()
+                    val currentTotalCount = layoutManager.itemCount
+                    if (currentTotalCount <= lastItem + layoutManager.spanCount) {
+                        if (!presenter.isLastPage && !presenter.isLoading) {
+                            presenter.isLoading = true
+                            presenter.loadEndlessData()
+                        }
                     }
+                } else if (layoutManager.findLastVisibleItemPosition() == recyclerView?.adapter?.itemCount!! - 1
+                        && !presenter.isLastPage) {
+                    presenter.loadEndlessData()
+                    presenter.isLoading = true
                 }
             }
         })
@@ -185,5 +200,19 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
 
     private fun setLayoutManager() {
         mostPopularMoviesRecyclerView.layoutManager = layoutManager
+    }
+
+    private fun setSearchListener() {
+        movieSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                presenter.onQueryChangeListener(newText.toString())
+                return false
+            }
+
+        })
     }
 }

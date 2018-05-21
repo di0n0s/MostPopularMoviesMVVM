@@ -10,5 +10,4 @@ interface BaseListPresenter<T> : BaseApiPresenter {
     var isLoading: Boolean
     var page: Int
     var isLastPage: Boolean
-    var loadEndlessData: Boolean
 }

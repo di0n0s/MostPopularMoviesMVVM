@@ -5,6 +5,7 @@ import com.example.sfcar.mostpopularmovies.presenters.base.BaseListPresenter
 
 interface MostPopularMoviesPresenter<T> : BaseListPresenter<T> {
 
-    fun getPopularMovies()
     fun onMovieListReceived(movieList: MovieListPagination)
+    fun onQueryChangeListener(query: String)
+    var query: String
 }

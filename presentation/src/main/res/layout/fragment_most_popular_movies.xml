@@ -20,6 +20,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:background="@color/white"
+            android:focusableInTouchMode="true"
             android:inputType="textPersonName"
             app:iconifiedByDefault="false"
             app:queryHint="@string/movie_search_hint" />

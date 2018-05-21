@@ -1,7 +1,9 @@
 package com.example.sfcar.mostpopularmovies.presenters.mostPopularMovies
 
 import com.example.sfcar.mostpopularmovies.domain.interactor.params.MostPopularMoviesParams
+import com.example.sfcar.mostpopularmovies.domain.interactor.params.SearchMoviesParams
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.GetPopularMoviesUseCase
+import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.SearchMoviesUseCase
 import com.example.sfcar.mostpopularmovies.domain.model.MovieListPagination
 import com.example.sfcar.mostpopularmovies.injector.PerFragment
 import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
@@ -14,22 +16,28 @@ import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMo
 import javax.inject.Inject
 
 @PerFragment
-class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: GetPopularMoviesUseCase) : MostPopularMoviesPresenter<BaseMovieViewModel> {
+class MostPopularMoviesPresenterImp @Inject constructor(private val popularMoviesUseCase: GetPopularMoviesUseCase,
+                                                        private val searchMoviesUseCase: SearchMoviesUseCase) : MostPopularMoviesPresenter<BaseMovieViewModel> {
 
     override var model: ArrayList<BaseMovieViewModel> = ArrayList()
     override var page: Int = 0
-    override var loadEndlessData: Boolean = false
     override var isLastPage: Boolean = false
     override var isLoading: Boolean = false
+    override var query: String = ""
     @Inject
     lateinit var view: MostPopularMoviesView
+    private var loadEndlessData: Boolean = false
 
     override fun start() {
         loadData()
     }
 
-    override fun getPopularMovies() {
-        useCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this))
+    private fun getPopularMovies() {
+        popularMoviesUseCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this))
+    }
+
+    private fun searchMovies(query: String) {
+        searchMoviesUseCase.execute(SearchMoviesParams(++page, query, loadEndlessData), MostPopularMoviesObserver(this))
     }
 
     override fun onMovieListReceived(movieList: MovieListPagination) {
@@ -53,14 +61,34 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     }
 
     override fun loadData() {
-        page = 0
+        setPageZero()
+        setLoadEndlessDataFalse()
+        selectAllMoviesOrSearch()
+    }
+
+    private fun setLoadEndlessDataFalse() {
         loadEndlessData = false
-        getPopularMovies()
+    }
+
+    private fun setPageZero() {
+        page = 0
     }
 
     override fun loadEndlessData() {
         loadEndlessData = true
-        getPopularMovies()
+        selectAllMoviesOrSearch()
+    }
+
+    override fun onQueryChangeListener(query: String) {
+        this.query = query
+        loadData()
+    }
+
+    private fun selectAllMoviesOrSearch() {
+        if (query.isBlank())
+            getPopularMovies()
+        else
+            searchMovies(query)
     }
 
     override fun setIsLastPage(currentPage: Int, pagesNumber: Int) {
@@ -82,10 +110,16 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     }
 
     private fun manageViewAfterOK() {
+        restartAdapter()
         view.setItems()
         showOrHideEmptyAndRecyclerView()
         isLoading = false
         view.showProgressBar(false)
+    }
+
+    private fun restartAdapter() {
+        if (!loadEndlessData)
+            view.setNullAdapter()
     }
 
     private fun showOrHideEmptyAndRecyclerView() {
@@ -105,7 +139,8 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     }
 
     override fun onDestroy() {
-        useCase.dispose()
+        popularMoviesUseCase.dispose()
+        searchMoviesUseCase.dispose()
     }
 
     override fun showLoading() {

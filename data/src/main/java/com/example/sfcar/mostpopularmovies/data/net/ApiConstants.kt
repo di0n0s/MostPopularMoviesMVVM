@@ -2,7 +2,7 @@ package com.example.sfcar.mostpopularmovies.data.net
 
 object ApiConstants {
 
-    const val BASE_URL = "http://api.themoviedb.org"
+    private const val BASE_URL = "http://api.themoviedb.org"
     const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p"
     const val IMAGE_SIZE_W342 = "/w342"
     const val ENDPOINT = "$BASE_URL/3/"
@@ -13,4 +13,5 @@ object ApiConstants {
     const val QUERY_PARAM_LANGUAGE = "language"
     const val QUERY_PARAM_API_KEY = "api_key"
     const val QUERY_PARAM_REGION = "region"
+    const val VIEW_PORNOGRAPHY = false
 }

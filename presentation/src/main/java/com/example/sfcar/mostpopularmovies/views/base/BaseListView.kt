@@ -10,6 +10,7 @@ interface BaseListView {
     fun hideEmptyView()
     fun showEmptyView()
     fun setItems()
+    fun setNullAdapter()
     fun bringContext(): Context
     fun setRefreshingBehaviour()
     fun setEmptyView()
