@@ -7,6 +7,7 @@ import com.example.sfcar.mostpopularmovies.injector.PerFragment
 import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.FooterMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.MovieListPaginationViewModel
+import com.example.sfcar.mostpopularmovies.model.enumerations.ErrorEnum
 import com.example.sfcar.mostpopularmovies.model.mapper.MovieListPaginationViewModelMapper
 import com.example.sfcar.mostpopularmovies.observers.MostPopularMoviesObserver
 import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesView
@@ -28,7 +29,7 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     }
 
     override fun getPopularMovies() {
-        useCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this, view.bringContext()))
+        useCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this))
     }
 
     override fun onMovieListReceived(movieList: MovieListPagination) {
@@ -43,11 +44,11 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
 
     }
 
-    override fun onErrorReceived(message: String?) {
+    override fun onErrorReceived(errorCode: Int) {
         view.showEmptyView()
         view.hideRecyclerView()
         view.showProgressBar(false)
-        view.showErrorMessage(message)
+        view.showErrorMessage(ErrorEnum.findErrorDescriptionByErrorCode(errorCode, view.bringContext()))
 
     }
 

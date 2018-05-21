@@ -32,38 +32,28 @@ class MostPopularMoviesPresenterImpTest : UnitTest() {
         presenter.view = view
     }
 
-//    @Test
-//    fun getPopularMoviesTest() {
-//        presenter.getPopularMovies()
-//
-//        verify(useCase).execute(any(), any())
-//    }
-
     @Test
-    fun onErrorReceivedTest() {
-        presenter.onErrorReceived("any")
+    fun getPopularMoviesTest() {
+        presenter.getPopularMovies()
 
-        verify(presenter.view).showEmptyView()
-        verify(presenter.view).hideRecyclerView()
-        verify(presenter.view).showProgressBar(false)
-        verify(presenter.view).showErrorMessage("any")
+        verify(useCase).execute(any(), any())
     }
 
-//    @Test
-//    fun loadDataTest() {
-//        presenter.loadData()
-//
-//        assert(presenter.page == 0)
-//        assert(!presenter.loadEndlessData)
-//        verify(useCase).execute(any(), any())
-//    }
+    @Test
+    fun loadDataTest() {
+        presenter.loadData()
 
-//    @Test
-//    fun loadEndlessDataTest() {
-//        presenter.loadEndlessData()
-//        assert(presenter.loadEndlessData)
-//        verify(useCase).execute(any(), any())
-//    }
+        assert(presenter.page == 1)
+        assert(!presenter.loadEndlessData)
+        verify(useCase).execute(any(), any())
+    }
+
+    @Test
+    fun loadEndlessDataTest() {
+        presenter.loadEndlessData()
+        assert(presenter.loadEndlessData)
+        verify(useCase).execute(any(), any())
+    }
 
     @Test
     fun setIsLastPageTrueTest() {
@@ -85,13 +75,4 @@ class MostPopularMoviesPresenterImpTest : UnitTest() {
 
         verify(model, never()).add(any())
     }
-
-//    @Test
-//    fun addFooterTrueTest() {
-//        presenter.isLastPage = false
-//
-//        presenter.addFooter()
-//
-//        verify(model).add(any())
-//    }
 }

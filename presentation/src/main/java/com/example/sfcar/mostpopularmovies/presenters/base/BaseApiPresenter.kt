@@ -4,6 +4,6 @@ interface BaseApiPresenter : BasePresenter {
 
     fun showLoading()
     fun hideLoading()
-    fun onErrorReceived(message: String?)
+    fun onErrorReceived(errorCode: Int)
 
 }
