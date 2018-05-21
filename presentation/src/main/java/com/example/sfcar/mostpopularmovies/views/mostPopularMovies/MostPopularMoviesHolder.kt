@@ -23,7 +23,6 @@ class MostPopularMoviesHolder(itemView: View?, private val adapterListener: Adap
             GlideApp.with(itemView.context)
                     .load(movie.picturePath)
                     .apply(RequestOptions().centerInside())
-                    .apply(RequestOptions().placeholder(R.drawable.img_empty_documentos))
                     .listener(CustomRequestListener(itemView))
                     .into(itemView.moviePoster as ImageView)
         }

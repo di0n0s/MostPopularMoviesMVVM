@@ -102,6 +102,10 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         setAdapter(presenter.model)
     }
 
+    private fun restartLastPosition() {
+        (mostPopularMoviesRecyclerView.adapter as MostPopularMoviesAdapter).restartLastPosition()
+    }
+
     override fun showProgressBar(show: Boolean) {
         if (swipeRefreshLayout.isRefreshing) {
             if (!show)
@@ -112,6 +116,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
     override fun setRefreshingBehaviour() {
         swipeRefreshLayout.setOnRefreshListener {
             presenter.isLoading = true
+            restartLastPosition()
             presenter.start()
         }
     }
