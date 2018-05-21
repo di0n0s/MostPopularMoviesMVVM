@@ -10,6 +10,7 @@
         android:id="@+id/searchViewLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
         android:background="@color/colorPrimary">
 
         <android.support.v7.widget.SearchView
@@ -20,7 +21,6 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:background="@color/white"
-            android:focusableInTouchMode="true"
             android:inputType="textPersonName"
             app:iconifiedByDefault="false"
             app:queryHint="@string/movie_search_hint" />

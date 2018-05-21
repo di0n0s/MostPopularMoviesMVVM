@@ -10,6 +10,7 @@ import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.example.sfcar.mostpopularmovies.MostPopularMoviesApplication
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.adapters.MostPopularMoviesAdapter
@@ -64,6 +65,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
 
     override fun onResume() {
         super.onResume()
+        searchViewLinearLayout.requestFocus()
         presenter.onResume()
     }
 
@@ -219,5 +221,11 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
             }
 
         })
+
+        movieSearchView.findViewById<ImageView>(R.id.search_close_btn).setOnClickListener {
+            movieSearchView.setQuery("", false)
+            movieSearchView.clearFocus()
+        }
+
     }
 }
