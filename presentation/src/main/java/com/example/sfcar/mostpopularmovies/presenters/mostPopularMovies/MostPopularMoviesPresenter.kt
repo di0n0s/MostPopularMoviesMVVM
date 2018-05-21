@@ -7,5 +7,4 @@ interface MostPopularMoviesPresenter<T> : BaseListPresenter<T> {
 
     fun getPopularMovies()
     fun onMovieListReceived(movieList: MovieListPagination)
-    fun onErrorReceived(message: String?)
 }
