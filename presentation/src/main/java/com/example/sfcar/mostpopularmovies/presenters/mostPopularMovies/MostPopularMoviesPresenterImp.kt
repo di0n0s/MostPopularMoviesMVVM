@@ -37,7 +37,7 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val popularMovie
     }
 
     private fun searchMovies(query: String) {
-        searchMoviesUseCase.execute(SearchMoviesParams(++page, query, loadEndlessData), MostPopularMoviesObserver(this))
+        searchMoviesUseCase.execute(SearchMoviesParams(++page, query), MostPopularMoviesObserver(this))
     }
 
     override fun onMovieListReceived(movieList: MovieListPagination) {
