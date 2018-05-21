@@ -1,6 +1,6 @@
 package com.example.sfcar.mostpopularmovies.presenters.mostPopularMovies
 
-import com.example.sfcar.mostpopularmovies.UnitTest
+import com.example.sfcar.UnitTest
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.GetPopularMoviesUseCase
 import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
 import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesView

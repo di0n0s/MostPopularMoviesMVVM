@@ -50,7 +50,10 @@ dependencies {
     //Rx
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 
-
+    //UnitTest
+    testImplementation 'junit:junit:4.12'
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
     implementation project(':domain')
 }
