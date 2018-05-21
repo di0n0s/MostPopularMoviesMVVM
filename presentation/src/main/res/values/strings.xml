@@ -8,4 +8,10 @@
     <string name="most_popular_movies_toolbar_title">Most Popular Movies</string>
     <string name="movie_detail_release_year_title">Release year</string>
     <string name="movie_detail_overview_tite">Overview</string>
+    <string name="error_service_not_exist">This service does not exist</string>
+    <string name="error_permissions">You do not have permissions to access the service</string>
+    <string name="error_service_not_exist_that_format">This service doesn\'t exist in that format</string>
+    <string name="error_request_parameters_incorret">Your request parameters are incorrect</string>
+    <string name="error_id_invalid">The pre-requisite id is invalid or not found</string>
+    <string name="error_network_connection">There is an error with connection</string>
 </resources>

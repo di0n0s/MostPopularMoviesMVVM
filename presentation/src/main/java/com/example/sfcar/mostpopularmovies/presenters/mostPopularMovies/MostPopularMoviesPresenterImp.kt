@@ -28,7 +28,7 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
     }
 
     override fun getPopularMovies() {
-        useCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this))
+        useCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this, view.bringContext()))
     }
 
     override fun onMovieListReceived(movieList: MovieListPagination) {
@@ -43,10 +43,12 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val useCase: Get
 
     }
 
-    override fun onErrorReceived() {
+    override fun onErrorReceived(message: String?) {
         view.showEmptyView()
         view.hideRecyclerView()
         view.showProgressBar(false)
+        view.showErrorMessage(message)
+
     }
 
     override fun loadData() {

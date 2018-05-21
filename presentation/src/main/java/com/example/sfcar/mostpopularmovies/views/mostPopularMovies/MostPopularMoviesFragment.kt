@@ -87,6 +87,10 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
                 .inject(this)
     }
 
+    override fun showErrorMessage(message: String?) {
+        message?.let { showToastMessage(it) }
+    }
+
     override fun bringContext(): Context = this.context!!
 
     override fun setItems() {

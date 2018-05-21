@@ -13,4 +13,5 @@ interface BaseListView {
     fun bringContext(): Context
     fun setRefreshingBehaviour()
     fun setEmptyView()
+    fun showErrorMessage(message: String?)
 }
