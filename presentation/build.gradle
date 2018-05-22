@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.example.sfcar.mostpopularmovies"
+        minSdkVersion 17
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Android
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.github.bumptech.glide:annotations:4.7.1'
+    kapt 'com.github.bumptech.glide:compiler:4.7.1'
+
+    //UnitTest
+    testImplementation 'junit:junit:4.12'
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
+    //InstrumentationTest
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Dagger 2 dependencies
+    kapt 'com.google.dagger:dagger-compiler:2.15'
+    implementation 'com.google.dagger:dagger:2.15'
+
+    //Networking dependencies
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+
+    //Rx
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+
+    //RxBindings
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.1.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-design:2.1.1'
+
+
+    implementation project(':domain')
+    implementation project(':data')
+}

@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context="com.example.sfcar.mostpopularmovies.views.movieDetail.MovieDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:targetApi="lollipop">
+
+        <TextView
+            style="@style/MovieDetailTitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_detail_overview_tite" />
+
+        <TextView
+            android:id="@+id/movieOverviewTextView"
+            style="@style/MovieDetailFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia consectetur sem, id euismod dolor lobortis non. Fusce pharetra posuere libero, sed consequat libero pellentesque a. Morbi feugiat sit amet eros nec rhoncus. Morbi efficitur nisi sed turpis finibus, ut finibus mauris dapibus. Donec maximus ultricies dui et tincidunt. Nunc mollis mauris consequat, accumsan ante sit amet, laoreet dolor. Suspendisse quis tellus sed leo bibendum varius id et lorem. Curabitur congue metus erat, et sagittis tellus porttitor quis. Praesent mauris arcu, laoreet at quam in, tempus hendrerit mauris. Vivamus ullamcorper elit sed risus mattis hendrerit. Quisque ultricies, erat quis congue iaculis, est ex varius justo, eu tempus mi ipsum eget justo. Cras id cursus lorem. Suspendisse a viverra justo. Vestibulum egestas neque ut maximus porta. Mauris at dignissim dui. Ut congue odio quis lorem cursus ornare." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:elevation="3dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        tools:targetApi="lollipop">
+
+        <TextView
+            style="@style/MovieDetailTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="@string/movie_detail_release_year_title" />
+
+        <TextView
+            android:id="@+id/movieDateTextView"
+            style="@style/MovieDetailTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:text="2017"/>
+    </LinearLayout>
+
+</LinearLayout>
