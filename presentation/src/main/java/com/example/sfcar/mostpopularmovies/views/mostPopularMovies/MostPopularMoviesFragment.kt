@@ -176,7 +176,8 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
                 if (dy > 0) {
                     val lastItem = layoutManager.findLastCompletelyVisibleItemPosition()
                     val currentTotalCount = layoutManager.itemCount
-                    if (currentTotalCount <= lastItem + 3) {
+                    //6 elements before to call endless data
+                    if (currentTotalCount <= lastItem + 6) {
                         if (!presenter.isLastPage && !presenter.isLoading) {
                             presenter.isLoading = true
                             presenter.loadEndlessData()
