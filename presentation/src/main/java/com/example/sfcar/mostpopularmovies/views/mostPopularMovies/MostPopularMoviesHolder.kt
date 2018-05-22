@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 import com.example.sfcar.mostpopularmovies.R
-import com.example.sfcar.mostpopularmovies.glide.CustomRequestListener
 import com.example.sfcar.mostpopularmovies.glide.GlideApp
 import com.example.sfcar.mostpopularmovies.interfaces.AdapterListOnClickListener
 import com.example.sfcar.mostpopularmovies.model.MovieViewModel
@@ -23,7 +22,7 @@ class MostPopularMoviesHolder(itemView: View?, private val adapterListener: Adap
             GlideApp.with(itemView.context)
                     .load(movie.picturePath)
                     .apply(RequestOptions().centerInside())
-                    .listener(CustomRequestListener(itemView))
+                    .apply(RequestOptions().placeholder(R.drawable.ic_movie_placeholder))
                     .into(itemView.moviePoster as ImageView)
         }
     }

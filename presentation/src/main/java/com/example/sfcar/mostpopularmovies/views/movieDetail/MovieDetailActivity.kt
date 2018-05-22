@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 import com.example.sfcar.mostpopularmovies.R
-import com.example.sfcar.mostpopularmovies.glide.CustomRequestListener
 import com.example.sfcar.mostpopularmovies.glide.GlideApp
 import com.example.sfcar.mostpopularmovies.model.MovieViewModel
 import com.example.sfcar.mostpopularmovies.views.base.BaseActivity
@@ -81,8 +80,7 @@ class MovieDetailActivity : BaseActivity() {
             GlideApp.with(this)
                     .load(viewModel.picturePath)
                     .apply(RequestOptions().centerInside())
-                    .apply(RequestOptions().placeholder(R.drawable.img_empty_documentos))
-                    .listener(CustomRequestListener(findViewById(R.id.progressBar)))
+                    .apply(RequestOptions().placeholder(R.drawable.ic_movie_placeholder))
                     .into(movieBackdrop as ImageView)
         }
     }

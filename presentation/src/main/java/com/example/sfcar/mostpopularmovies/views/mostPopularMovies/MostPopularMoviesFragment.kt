@@ -56,10 +56,10 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
-        setSpanSize()
         setEmptyView()
         setRefreshingBehaviour()
         setSearchListener()
+        setSpanSize()
         presenter.start()
     }
 
@@ -176,33 +176,15 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
                 if (dy > 0) {
                     val lastItem = layoutManager.findLastCompletelyVisibleItemPosition()
                     val currentTotalCount = layoutManager.itemCount
-                    if (currentTotalCount <= lastItem + layoutManager.spanCount) {
+                    if (currentTotalCount <= lastItem + 3) {
                         if (!presenter.isLastPage && !presenter.isLoading) {
                             presenter.isLoading = true
                             presenter.loadEndlessData()
                         }
                     }
-                } else if (layoutManager.findLastVisibleItemPosition() == recyclerView?.adapter?.itemCount!! - 1
-                        && !presenter.isLastPage) {
-                    presenter.loadEndlessData()
-                    presenter.isLoading = true
                 }
             }
         })
-    }
-
-    private fun setSpanSize() {
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                val adapter = mostPopularMoviesRecyclerView.adapter
-                return when (adapter.getItemViewType(position)) {
-                    MostPopularMoviesAdapter.MOVIE_TYPE -> 1
-                    MostPopularMoviesAdapter.FOOTER_TYPE -> 3
-                    else -> -1
-                }
-            }
-
-        }
     }
 
     private fun setLayoutManager() {
@@ -227,5 +209,19 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
             movieSearchView.clearFocus()
         }
 
+    }
+
+    private fun setSpanSize() {
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val adapter = mostPopularMoviesRecyclerView.adapter
+                return when (adapter.getItemViewType(position)) {
+                    MostPopularMoviesAdapter.MOVIE_TYPE -> 1
+                    MostPopularMoviesAdapter.FOOTER_TYPE -> 3
+                    else -> -1
+                }
+            }
+
+        }
     }
 }

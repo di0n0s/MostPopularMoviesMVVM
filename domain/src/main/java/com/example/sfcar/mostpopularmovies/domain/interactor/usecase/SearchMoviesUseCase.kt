@@ -16,6 +16,7 @@ class SearchMoviesUseCase @Inject constructor(private val movieRepository: Movie
 
     override fun execute(params: Params, observer: DisposableObserver<MovieListPagination>) {
         val publishSubject = createPublishSubject()
+        //Cancellable permits cancel previous request if new one arrive
         val observable = createCancellablePreRequestObservable(publishSubject, params, observer)
         launchPublishSubject(publishSubject, params)
         addDisposable(observable)

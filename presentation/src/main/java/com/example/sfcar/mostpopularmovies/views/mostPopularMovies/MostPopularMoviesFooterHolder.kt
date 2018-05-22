@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.generic_footer.view.*
 class MostPopularMoviesFooterHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
     fun bindProgressBar() {
-        itemView.footerProgressBar.indeterminateDrawable.setColorFilter(ContextCompat.getColor(itemView.context, R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
+        itemView.footerProgressBar.indeterminateDrawable.setColorFilter(ContextCompat.getColor(itemView.context, R.color.white), PorterDuff.Mode.MULTIPLY)
     }
 
 }
