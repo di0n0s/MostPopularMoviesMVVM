@@ -26,13 +26,13 @@ class MostPopularMoviesPresenterImp @Inject constructor(private val popularMovie
     override var query: String = ""
     @Inject
     lateinit var view: MostPopularMoviesView
-    private var loadEndlessData: Boolean = false
+    var loadEndlessData: Boolean = false
 
     override fun start() {
         loadData()
     }
 
-    private fun getPopularMovies() {
+    fun getPopularMovies() {
         popularMoviesUseCase.execute(MostPopularMoviesParams(++page), MostPopularMoviesObserver(this))
     }
 
