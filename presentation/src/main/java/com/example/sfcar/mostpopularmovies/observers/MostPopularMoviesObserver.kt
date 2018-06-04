@@ -2,12 +2,12 @@ package com.example.sfcar.mostpopularmovies.observers
 
 import com.example.sfcar.mostpopularmovies.domain.model.MovieListPagination
 import com.example.sfcar.mostpopularmovies.observers.base.BaseObserver
-import com.example.sfcar.mostpopularmovies.presenters.mostPopularMovies.MostPopularMoviesPresenterImp
+import com.example.sfcar.mostpopularmovies.viewModels.MostPopularMoviesViewModel
 
-class MostPopularMoviesObserver(private val presenter: MostPopularMoviesPresenterImp) : BaseObserver<MovieListPagination>(presenter) {
+class MostPopularMoviesObserver(private val viewModel: MostPopularMoviesViewModel) : BaseObserver<MovieListPagination>(viewModel) {
 
     override fun onNext(t: MovieListPagination) {
-        presenter.onMovieListReceived(t)
+        viewModel.onMovieListReceived(t)
     }
 
 }

@@ -14,6 +14,9 @@ import android.widget.ImageView
 import com.example.sfcar.mostpopularmovies.MostPopularMoviesApplication
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.adapters.MostPopularMoviesAdapter
+import com.example.sfcar.mostpopularmovies.extensions.failure
+import com.example.sfcar.mostpopularmovies.extensions.observe
+import com.example.sfcar.mostpopularmovies.extensions.viewModel
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseFragmentModule
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseListModule
 import com.example.sfcar.mostpopularmovies.injector.modules.MostPopularMoviesModule
@@ -22,10 +25,10 @@ import com.example.sfcar.mostpopularmovies.interfaces.MostPopularMoviesActivityL
 import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.MovieViewModel
 import com.example.sfcar.mostpopularmovies.model.enumerations.EmptyViewModel
-import com.example.sfcar.mostpopularmovies.presenters.mostPopularMovies.MostPopularMoviesPresenterImp
+import com.example.sfcar.mostpopularmovies.model.enumerations.ErrorEnum
+import com.example.sfcar.mostpopularmovies.viewModels.MostPopularMoviesViewModel
 import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_most_popular_movies.*
-import rx.Subscription
 import javax.inject.Inject
 
 /**
@@ -34,17 +37,26 @@ import javax.inject.Inject
  */
 class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, AdapterListOnClickListener.ViewListener {
 
-    @Inject
-    lateinit var presenter: MostPopularMoviesPresenterImp
+    //    @Inject
+//    lateinit var presenter: MostPopularMoviesPresenterImp
     @Inject
     lateinit var layoutManager: GridLayoutManager
     @Inject
     lateinit var activityListener: MostPopularMoviesActivityListener
-    private var subscription: Subscription? = null
+    private lateinit var viewModel: MostPopularMoviesViewModel
+
 
     companion object {
         fun newInstance() = MostPopularMoviesFragment()
         const val TAG = "MostPopularMoviesFragment"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = viewModel(viewModelFactory) {
+            observe(model, ::renderMoviesList)
+            failure(failure, ::handleFailure)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -60,18 +72,16 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         setRefreshingBehaviour()
         setSearchListener()
         setSpanSize()
-        presenter.start()
+        viewModel.start()
     }
 
     override fun onResume() {
         super.onResume()
         searchViewLinearLayout.requestFocus()
-        presenter.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        presenter.onPause()
     }
 
     override fun onDestroyView() {
@@ -81,8 +91,6 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
 
     override fun onDestroy() {
         super.onDestroy()
-        subscription?.unsubscribe()
-        presenter.onDestroy()
     }
 
     override fun setupFragmentComponent() {
@@ -98,11 +106,11 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         message?.let { showToastMessage(it) }
     }
 
-    override fun bringContext(): Context = this.context!!
+//    override fun bringContext(): Context = this.context!!
 
-    override fun setItems() {
-        setAdapter(presenter.model)
-    }
+//    override fun setItems() {
+//        setAdapter(presenter.model)
+//    }
 
     private fun restartLastPosition() {
         (mostPopularMoviesRecyclerView.adapter as MostPopularMoviesAdapter).restartLastPosition()
@@ -145,6 +153,36 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
 
     override fun onItemSelected(position: Int, view: View) {
         activityListener.goToMovieDetailActivity(presenter.model[position] as MovieViewModel, view)
+    }
+
+    private fun renderMoviesList(movies: List<BaseMovieViewModel>?) {
+        restartAdapter()
+        setAdapter(presenter.model)
+        showOrHideEmptyAndRecyclerView()
+        viewModel.isLoading = false
+        showProgressBar(false)
+    }
+
+    private fun handleFailure(errorCode: Int?) {
+        showEmptyView()
+        hideRecyclerView()
+        showProgressBar(false)
+        showErrorMessage(ErrorEnum.findErrorDescriptionByErrorCode(errorCode!!, this.context!!))
+    }
+
+    private fun showOrHideEmptyAndRecyclerView() {
+        if (viewModel.model.value?.isEmpty()!!) {
+            showEmptyView()
+            hideRecyclerView()
+        } else {
+            showRecyclerView()
+            hideEmptyView()
+        }
+    }
+
+    private fun restartAdapter() {
+        if (!viewModel.loadEndlessData)
+            setNullAdapter()
     }
 
     private fun setRecyclerView() {

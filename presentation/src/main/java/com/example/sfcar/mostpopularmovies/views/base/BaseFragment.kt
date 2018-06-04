@@ -1,9 +1,11 @@
 package com.example.sfcar.mostpopularmovies.views.base
 
 
+import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.widget.Toast
+import javax.inject.Inject
 
 
 /**
@@ -11,6 +13,10 @@ import android.widget.Toast
  *
  */
 abstract class BaseFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
