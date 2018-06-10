@@ -1,7 +1,6 @@
 package com.example.sfcar.mostpopularmovies.views.mostPopularMovies
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -238,11 +237,14 @@ class MostPopularMoviesFragment : BaseFragment(), AdapterListOnClickListener.Vie
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val adapter = mostPopularMoviesRecyclerView.adapter
-                return when (adapter.getItemViewType(position)) {
-                    MostPopularMoviesAdapter.MOVIE_TYPE -> 1
-                    MostPopularMoviesAdapter.FOOTER_TYPE -> 3
-                    else -> -1
+                if (position < adapter.itemCount) {
+                    return when (adapter.getItemViewType(position)) {
+                        MostPopularMoviesAdapter.MOVIE_TYPE -> 1
+                        MostPopularMoviesAdapter.FOOTER_TYPE -> 3
+                        else -> -1
+                    }
                 }
+                return -1
             }
 
         }

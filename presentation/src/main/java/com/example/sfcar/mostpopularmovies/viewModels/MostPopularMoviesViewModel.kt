@@ -38,18 +38,6 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
         searchMoviesUseCase.execute(SearchMoviesParams(++page, query), MostPopularMoviesObserver(this))
     }
 
-//    fun onMovieListReceived(movieList: MovieListPagination) {
-//        val movieListPaginationViewModel = MovieListPaginationViewModelMapper.turnInto(movieList, view.bringContext())
-//        if (!loadEndlessData) {
-//            movies = movieListPaginationViewModel.movieList
-//            setIsLastPage(movieListPaginationViewModel.currentPage, movieListPaginationViewModel.pagesNumber)
-//            addFooter()
-//        } else
-//            removeFooterAndConcat(movieListPaginationViewModel)
-//        setMutableLiveData()
-//
-//    }
-
     fun onMovieListReceived(movieList: MovieListPagination) {
         if (!loadEndlessData) movies.clear()
         setIsLastPage(movieList.currentPage, movieList.pagesNumber)
@@ -106,33 +94,11 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
             movies.add(FooterMovieViewModel())
     }
 
-//    private fun removeFooterAndConcat(movieListPaginationViewModel: MovieListPaginationViewModel) {
-//        removeFooter()
-//        movies.addAll(movieListPaginationViewModel.movieList)
-//        if (movieListPaginationViewModel.pagesNumber != 0 && movieListPaginationViewModel.pagesNumber != movieListPaginationViewModel.currentPage)
-//            addFooter()
-//        else
-//            isLastPage = true
-//    }
-
     private fun removeFooter() {
         movies.removeAll { it is FooterMovieViewModel }
     }
 
     private fun setMutableLiveData() {
-//        restartAdapter()
-        model.value = movies //TODO probably this cause error on adapter
-//        isLoading = false
+        model.value = movies
     }
-
-//    private fun restartAdapter() {
-//        if (!loadEndlessData)
-//            view.setNullAdapter()
-//    }
-
-//TODO onDestroy()??
-
-
-
-
 }
