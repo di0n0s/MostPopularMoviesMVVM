@@ -4,7 +4,7 @@ import com.example.sfcar.mostpopularmovies.data.net.ApiConstants
 import javax.inject.Inject
 import javax.inject.Named
 
-class MovieListPaginationViewModelMapper {
+class MovieListPaginationViewMapper {
 
     @Inject
     @Named("unknownDate")

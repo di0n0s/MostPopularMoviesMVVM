@@ -6,10 +6,10 @@ import com.example.sfcar.mostpopularmovies.domain.interactor.params.SearchMovies
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.GetPopularMoviesUseCase
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.SearchMoviesUseCase
 import com.example.sfcar.mostpopularmovies.domain.model.MovieListPagination
-import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
-import com.example.sfcar.mostpopularmovies.model.FooterMovieViewModel
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
-import com.example.sfcar.mostpopularmovies.model.mapper.MovieListPaginationViewModelMapper
+import com.example.sfcar.mostpopularmovies.model.BaseMovieView
+import com.example.sfcar.mostpopularmovies.model.FooterMovieView
+import com.example.sfcar.mostpopularmovies.model.MovieView
+import com.example.sfcar.mostpopularmovies.model.mapper.MovieListPaginationViewMapper
 import com.example.sfcar.mostpopularmovies.observers.MostPopularMoviesObserver
 import com.example.sfcar.mostpopularmovies.viewModels.base.BaseViewModel
 import javax.inject.Inject
@@ -17,10 +17,10 @@ import javax.inject.Inject
 class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUseCase: GetPopularMoviesUseCase,
                                                      private val searchMoviesUseCase: SearchMoviesUseCase) : BaseViewModel() {
 
-    val model: MutableLiveData<ArrayList<BaseMovieViewModel>> = MutableLiveData()
+    val model: MutableLiveData<ArrayList<BaseMovieView>> = MutableLiveData()
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
-    private var movies: ArrayList<BaseMovieViewModel> = ArrayList()
+    private var movies: ArrayList<BaseMovieView> = ArrayList()
     private var page: Int = 0
     var loadEndlessData: Boolean = false
     private var query: String = ""
@@ -48,10 +48,10 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
     }
 
     private fun mapToViewModel(movieList: MovieListPagination) =
-            movieList.movieList.map { MovieViewModel(it.title,
-                    MovieListPaginationViewModelMapper().setYearString(it.releaseDate),
+            movieList.movieList.map { MovieView(it.title,
+                    MovieListPaginationViewMapper().setYearString(it.releaseDate),
                     it.overview,
-                    MovieListPaginationViewModelMapper().setPictureUrl(it.picturePath)) }
+                    MovieListPaginationViewMapper().setPictureUrl(it.picturePath)) }
 
 
     private fun loadData() {
@@ -91,11 +91,11 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
 
     private fun addFooter() {
         if (!isLastPage)
-            movies.add(FooterMovieViewModel())
+            movies.add(FooterMovieView())
     }
 
     private fun removeFooter() {
-        movies.removeAll { it is FooterMovieViewModel }
+        movies.removeAll { it is FooterMovieView }
     }
 
     private fun setMutableLiveData() {

@@ -10,20 +10,20 @@ import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.glide.GlideApp
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.views.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : BaseActivity() {
 
-    private lateinit var viewModel: MovieViewModel
+    private lateinit var view: MovieView
 
     companion object {
         private const val EXTRA_MOVIE = "ExtraMovie"
 
-        fun getCallingIntent(context: Context, movieViewModel: MovieViewModel): Intent {
+        fun getCallingIntent(context: Context, movieView: MovieView): Intent {
             val callingIntent = Intent(context, MovieDetailActivity::class.java)
-            callingIntent.putExtra(EXTRA_MOVIE, movieViewModel)
+            callingIntent.putExtra(EXTRA_MOVIE, movieView)
             return callingIntent
         }
     }
@@ -42,13 +42,13 @@ class MovieDetailActivity : BaseActivity() {
         currentFragment = MovieDetailFragment.newInstance(getMovieExtra())
     }
 
-    private fun getMovieExtra(): MovieViewModel {
-        viewModel = intent.getParcelableExtra(EXTRA_MOVIE)
-        return viewModel
+    private fun getMovieExtra(): MovieView {
+        view = intent.getParcelableExtra(EXTRA_MOVIE)
+        return view
     }
 
     override fun setToolbarTitle() {
-        collapsingToolbar.title = viewModel.title
+        collapsingToolbar.title = view.title
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -76,9 +76,9 @@ class MovieDetailActivity : BaseActivity() {
     }
 
     private fun setToolbarImage() {
-        if (viewModel.picturePath != "") {
+        if (view.picturePath != "") {
             GlideApp.with(this)
-                    .load(viewModel.picturePath)
+                    .load(view.picturePath)
                     .apply(RequestOptions().centerInside())
                     .apply(RequestOptions().placeholder(R.drawable.ic_movie_placeholder))
                     .into(movieBackdrop as ImageView)

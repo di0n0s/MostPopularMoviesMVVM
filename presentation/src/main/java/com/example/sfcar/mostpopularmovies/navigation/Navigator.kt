@@ -6,7 +6,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.sfcar.mostpopularmovies.R
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.views.movieDetail.MovieDetailActivity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,9 +14,9 @@ import javax.inject.Singleton
 @Singleton
 class Navigator @Inject constructor() {
 
-    fun toMovieDetail(context: Context?, movieViewModel: MovieViewModel, view: View) {
+    fun toMovieDetail(context: Context?, movieView: MovieView, view: View) {
         if (context != null) {
-            val intentToLaunch = MovieDetailActivity.getCallingIntent(context, movieViewModel)
+            val intentToLaunch = MovieDetailActivity.getCallingIntent(context, movieView)
             context.startActivity(intentToLaunch, prepareOptionsToBundle(context, view))
         }
     }

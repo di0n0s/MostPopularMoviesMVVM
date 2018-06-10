@@ -10,7 +10,7 @@ import com.example.sfcar.mostpopularmovies.MostPopularMoviesApplication
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.injector.modules.BaseFragmentModule
 import com.example.sfcar.mostpopularmovies.injector.modules.MovieDetailModule
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.presenters.movieDetail.MovieDetailPresenterImp
 import com.example.sfcar.mostpopularmovies.views.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
@@ -29,10 +29,10 @@ class MovieDetailFragment : BaseFragment() {
     companion object {
         const val TAG = "MovieDetailFragment"
         private const val ARG_MOVIE = "ArgMovie"
-        fun newInstance(movieViewModel: MovieViewModel): MovieDetailFragment {
+        fun newInstance(movieView: MovieView): MovieDetailFragment {
             val args = Bundle()
             val fragment = MovieDetailFragment()
-            args.putParcelable(ARG_MOVIE, movieViewModel)
+            args.putParcelable(ARG_MOVIE, movieView)
             fragment.arguments = args
             return fragment
         }
@@ -77,8 +77,8 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     private fun setTextViews() {
-        movieDateTextView.text = presenter.movieViewModel.releaseDate
-        movieOverviewTextView.text = presenter.movieViewModel.overview
+        movieDateTextView.text = presenter.movieView.releaseDate
+        movieOverviewTextView.text = presenter.movieView.overview
     }
 
 }

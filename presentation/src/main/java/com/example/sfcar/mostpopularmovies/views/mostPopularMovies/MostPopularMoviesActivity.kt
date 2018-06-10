@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.interfaces.MostPopularMoviesActivityListener
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.views.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_base.*
 
@@ -24,7 +24,7 @@ class MostPopularMoviesActivity : BaseActivity(), MostPopularMoviesActivityListe
         currentTag = MostPopularMoviesFragment.TAG
     }
 
-    override fun goToMovieDetailActivity(movieViewModel: MovieViewModel, view: View) {
-        navigator.toMovieDetail(this, movieViewModel, view)
+    override fun goToMovieDetailActivity(movieView: MovieView, view: View) {
+        navigator.toMovieDetail(this, movieView, view)
     }
 }

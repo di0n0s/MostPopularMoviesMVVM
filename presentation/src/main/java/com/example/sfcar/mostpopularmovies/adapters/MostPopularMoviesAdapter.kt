@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.interfaces.AdapterListOnClickListener
-import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.model.BaseMovieView
+import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesFooterHolder
 import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesHolder
 
-class MostPopularMoviesAdapter(private val movieList: List<BaseMovieViewModel>, private val viewListener: AdapterListOnClickListener.ViewListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), AdapterListOnClickListener.AdapterListener {
+class MostPopularMoviesAdapter(private val movieList: List<BaseMovieView>, private val viewListener: AdapterListOnClickListener.ViewListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), AdapterListOnClickListener.AdapterListener {
 
     private var lastPosition = -1
 
@@ -36,7 +36,7 @@ class MostPopularMoviesAdapter(private val movieList: List<BaseMovieViewModel>, 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MostPopularMoviesHolder -> holder.bindMovie(movieList[position] as MovieViewModel)
+            is MostPopularMoviesHolder -> holder.bindMovie(movieList[position] as MovieView)
             is MostPopularMoviesFooterHolder -> holder.bindProgressBar()
         }
         setAnimation(holder.itemView, position)
@@ -44,7 +44,7 @@ class MostPopularMoviesAdapter(private val movieList: List<BaseMovieViewModel>, 
 
     override fun getItemViewType(position: Int): Int =
             when (movieList[position]) {
-                is MovieViewModel -> MOVIE_TYPE
+                is MovieView -> MOVIE_TYPE
                 else -> FOOTER_TYPE
             }
 

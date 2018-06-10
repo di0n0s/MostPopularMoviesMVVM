@@ -3,10 +3,10 @@ package com.example.sfcar.mostpopularmovies.model
 import android.os.Parcel
 import android.os.Parcelable
 
-open class MovieViewModel(var title: String = "",
-                          var releaseDate: String = "",
-                          var overview: String = "",
-                          var picturePath: String = "") : BaseMovieViewModel(), Parcelable {
+open class MovieView(var title: String = "",
+                     var releaseDate: String = "",
+                     var overview: String = "",
+                     var picturePath: String = "") : BaseMovieView(), Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
@@ -25,9 +25,9 @@ open class MovieViewModel(var title: String = "",
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<MovieViewModel> = object : Parcelable.Creator<MovieViewModel> {
-            override fun createFromParcel(source: Parcel): MovieViewModel = MovieViewModel(source)
-            override fun newArray(size: Int): Array<MovieViewModel?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<MovieView> = object : Parcelable.Creator<MovieView> {
+            override fun createFromParcel(source: Parcel): MovieView = MovieView(source)
+            override fun newArray(size: Int): Array<MovieView?> = arrayOfNulls(size)
         }
     }
 }

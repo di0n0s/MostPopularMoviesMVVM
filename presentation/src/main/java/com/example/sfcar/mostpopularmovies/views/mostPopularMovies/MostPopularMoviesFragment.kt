@@ -21,8 +21,8 @@ import com.example.sfcar.mostpopularmovies.injector.modules.BaseListModule
 import com.example.sfcar.mostpopularmovies.injector.modules.MostPopularMoviesModule
 import com.example.sfcar.mostpopularmovies.interfaces.AdapterListOnClickListener
 import com.example.sfcar.mostpopularmovies.interfaces.MostPopularMoviesActivityListener
-import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
-import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.model.BaseMovieView
+import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.model.enumerations.EmptyViewModel
 import com.example.sfcar.mostpopularmovies.model.enumerations.ErrorEnum
 import com.example.sfcar.mostpopularmovies.viewModels.MostPopularMoviesViewModel
@@ -135,10 +135,10 @@ class MostPopularMoviesFragment : BaseFragment(), AdapterListOnClickListener.Vie
     }
 
     override fun onItemSelected(position: Int, view: View) {
-        activityListener.goToMovieDetailActivity(viewModel.model.value?.get(position) as MovieViewModel, view)
+        activityListener.goToMovieDetailActivity(viewModel.model.value?.get(position) as MovieView, view)
     }
 
-    private fun renderMoviesList(movies: List<BaseMovieViewModel>?) {
+    private fun renderMoviesList(movies: List<BaseMovieView>?) {
         restartAdapter()
         movies?.let { setAdapter(it) }
         showOrHideEmptyAndRecyclerView()
@@ -177,7 +177,7 @@ class MostPopularMoviesFragment : BaseFragment(), AdapterListOnClickListener.Vie
         mostPopularMoviesRecyclerView.adapter = null
     }
 
-    private fun setAdapter(model: List<BaseMovieViewModel>) {
+    private fun setAdapter(model: List<BaseMovieView>) {
         initAdapter(model)
         notifyDataSetChanged()
     }
@@ -186,7 +186,7 @@ class MostPopularMoviesFragment : BaseFragment(), AdapterListOnClickListener.Vie
         mostPopularMoviesRecyclerView.adapter.notifyDataSetChanged()
     }
 
-    private fun initAdapter(model: List<BaseMovieViewModel>) {
+    private fun initAdapter(model: List<BaseMovieView>) {
         if (mostPopularMoviesRecyclerView.adapter == null)
             mostPopularMoviesRecyclerView.adapter = MostPopularMoviesAdapter(model, this)
     }
