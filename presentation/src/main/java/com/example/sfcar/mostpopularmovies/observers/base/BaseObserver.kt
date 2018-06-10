@@ -1,7 +1,6 @@
 package com.example.sfcar.mostpopularmovies.observers.base
 
 import com.example.sfcar.mostpopularmovies.model.enumerations.ErrorEnum
-import com.example.sfcar.mostpopularmovies.presenters.base.BaseApiPresenter
 import com.example.sfcar.mostpopularmovies.viewModels.base.BaseViewModel
 import io.reactivex.observers.DisposableObserver
 import retrofit2.HttpException
@@ -14,9 +13,9 @@ abstract class BaseObserver<T>(private val viewModel: BaseViewModel) : Disposabl
 
     override fun onError(e: Throwable) {
         when (e) {
-            is HttpException -> viewModel.handleFailure(e.response().code())
-            is UnknownHostException -> viewModel.handleFailure(ErrorEnum.NINETY_NINE.httpStatus)
-            else -> viewModel.handleFailure(ErrorEnum.NINETY_NINE.httpStatus)
+            is HttpException -> viewModel.handleError(e.response().code())
+            is UnknownHostException -> viewModel.handleError(ErrorEnum.NINETY_NINE.httpStatus)
+            else -> viewModel.handleError(ErrorEnum.NINETY_NINE.httpStatus)
         }
     }
 }

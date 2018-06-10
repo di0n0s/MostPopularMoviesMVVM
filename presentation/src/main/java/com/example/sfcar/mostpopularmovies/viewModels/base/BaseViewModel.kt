@@ -7,7 +7,7 @@ abstract class BaseViewModel : ViewModel() {
 
     var failure: MutableLiveData<Int> = MutableLiveData()
 
-    protected fun handleFailure(errorCode: Int) {
+    fun handleError(errorCode: Int) {
         this.failure.value = errorCode
     }
 

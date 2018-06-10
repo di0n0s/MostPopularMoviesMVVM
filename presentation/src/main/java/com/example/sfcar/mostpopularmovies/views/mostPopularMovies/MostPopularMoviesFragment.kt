@@ -35,7 +35,7 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  *
  */
-class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, AdapterListOnClickListener.ViewListener {
+class MostPopularMoviesFragment : BaseFragment()/*, MostPopularMoviesView*/, AdapterListOnClickListener.ViewListener {
 
     //    @Inject
 //    lateinit var presenter: MostPopularMoviesPresenterImp
@@ -80,17 +80,9 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         searchViewLinearLayout.requestFocus()
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        mostPopularMoviesRecyclerView.adapter = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+        setNullAdapter()
     }
 
     override fun setupFragmentComponent() {
@@ -98,11 +90,11 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
                 .applicationComponent
                 .plus(BaseFragmentModule(this.context!!),
                         BaseListModule(this.context!!),
-                        MostPopularMoviesModule(this, activity as MostPopularMoviesActivity))
+                        MostPopularMoviesModule(activity as MostPopularMoviesActivity))
                 .inject(this)
     }
 
-    override fun showErrorMessage(message: String?) {
+    private fun showErrorMessage(message: String?) {
         message?.let { showToastMessage(it) }
     }
 
@@ -116,48 +108,48 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         (mostPopularMoviesRecyclerView.adapter as MostPopularMoviesAdapter).restartLastPosition()
     }
 
-    override fun showProgressBar(show: Boolean) {
+    private fun showProgressBar(show: Boolean) {
         if (swipeRefreshLayout.isRefreshing) {
             if (!show)
                 swipeRefreshLayout.isRefreshing = false
         }
     }
 
-    override fun setRefreshingBehaviour() {
+    private fun setRefreshingBehaviour() {
         swipeRefreshLayout.setOnRefreshListener {
-            presenter.isLoading = true
+            viewModel.isLoading = true
             restartLastPosition()
-            presenter.start()
+            viewModel.start()
         }
     }
 
-    override fun showRecyclerView() {
+    private fun showRecyclerView() {
         mostPopularMoviesRecyclerView.visibility = View.VISIBLE
     }
 
-    override fun hideRecyclerView() {
+    private fun hideRecyclerView() {
         mostPopularMoviesRecyclerView.visibility = View.GONE
     }
 
-    override fun hideEmptyView() {
+    private fun hideEmptyView() {
         emptyView.visibility = View.GONE
     }
 
-    override fun showEmptyView() {
+    private fun showEmptyView() {
         emptyView.visibility = View.VISIBLE
     }
 
-    override fun setEmptyView() {
+    private fun setEmptyView() {
         emptyView.fillViews(EmptyViewModel.EMPTY_MOST_POPULAR_MOVIES)
     }
 
     override fun onItemSelected(position: Int, view: View) {
-        activityListener.goToMovieDetailActivity(presenter.model[position] as MovieViewModel, view)
+        activityListener.goToMovieDetailActivity(viewModel.model.value?.get(position) as MovieViewModel, view)
     }
 
     private fun renderMoviesList(movies: List<BaseMovieViewModel>?) {
         restartAdapter()
-        setAdapter(presenter.model)
+        movies?.let { setAdapter(it) }
         showOrHideEmptyAndRecyclerView()
         viewModel.isLoading = false
         showProgressBar(false)
@@ -190,7 +182,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
         setScrollListener()
     }
 
-    override fun setNullAdapter() {
+    private fun setNullAdapter() {
         mostPopularMoviesRecyclerView.adapter = null
     }
 
@@ -216,9 +208,9 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
                     val currentTotalCount = layoutManager.itemCount
                     //6 elements before to call endless data
                     if (currentTotalCount <= lastItem + 6) {
-                        if (!presenter.isLastPage && !presenter.isLoading) {
-                            presenter.isLoading = true
-                            presenter.loadEndlessData()
+                        if (!viewModel.isLastPage && !viewModel.isLoading) {
+                            viewModel.isLoading = true
+                            viewModel.loadEndlessData()
                         }
                     }
                 }
@@ -237,7 +229,7 @@ class MostPopularMoviesFragment : BaseFragment(), MostPopularMoviesView, Adapter
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                presenter.onQueryChangeListener(newText.toString())
+                viewModel.onQueryChangeListener(newText.toString())
                 return false
             }
 

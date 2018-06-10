@@ -9,14 +9,14 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MostPopularMoviesModule(private val mostPopularMoviesFragment: MostPopularMoviesFragment,
-                              private val mostPopularMoviesActivity: MostPopularMoviesActivity) {
+class MostPopularMoviesModule(/*private val mostPopularMoviesFragment: MostPopularMoviesFragment,
+                              */private val mostPopularMoviesActivity: MostPopularMoviesActivity) {
 
-    @Provides
-    @PerFragment
-    fun provideMostPopularMoviesView(): MostPopularMoviesView {
-        return mostPopularMoviesFragment
-    }
+//    @Provides
+//    @PerFragment
+//    fun provideMostPopularMoviesView(): MostPopularMoviesView {
+//        return mostPopularMoviesFragment
+//    }
 
     @Provides
     @PerFragment

@@ -1,4 +1,4 @@
-package com.example.sfcar.mostpopularmovies.viewModels
+package com.example.sfcar.mostpopularmovies.viewModels.base
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

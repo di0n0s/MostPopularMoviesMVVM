@@ -1,9 +1,6 @@
 package com.example.sfcar.mostpopularmovies.viewModels
 
 import android.arch.lifecycle.MutableLiveData
-import android.content.Context
-import com.example.sfcar.mostpopularmovies.R
-import com.example.sfcar.mostpopularmovies.data.net.ApiConstants
 import com.example.sfcar.mostpopularmovies.domain.interactor.params.MostPopularMoviesParams
 import com.example.sfcar.mostpopularmovies.domain.interactor.params.SearchMoviesParams
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.GetPopularMoviesUseCase
@@ -12,6 +9,7 @@ import com.example.sfcar.mostpopularmovies.domain.model.MovieListPagination
 import com.example.sfcar.mostpopularmovies.model.BaseMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.FooterMovieViewModel
 import com.example.sfcar.mostpopularmovies.model.MovieViewModel
+import com.example.sfcar.mostpopularmovies.model.mapper.MovieListPaginationViewModelMapper
 import com.example.sfcar.mostpopularmovies.observers.MostPopularMoviesObserver
 import com.example.sfcar.mostpopularmovies.viewModels.base.BaseViewModel
 import javax.inject.Inject
@@ -62,7 +60,10 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
     }
 
     private fun mapToViewModel(movieList: MovieListPagination) =
-            movieList.movieList.map { MovieViewModel(it.title, setYearString(it.releaseDate), it.overview, setPictureUrl(it.picturePath)) }
+            movieList.movieList.map { MovieViewModel(it.title,
+                    MovieListPaginationViewModelMapper().setYearString(it.releaseDate),
+                    it.overview,
+                    MovieListPaginationViewModelMapper().setPictureUrl(it.picturePath)) }
 
 
     private fun loadData() {
@@ -131,18 +132,7 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
 
 //TODO onDestroy()??
 
-    private fun releaseDateToYear(releaseDate: String): CharSequence =
-            releaseDate.subSequence(0, 4)
 
-    private fun setYearString(releaseDate: String): String {
-        return if (releaseDate.isNotBlank())
-            releaseDateToYear(releaseDate).toString()
-        else
-            context.getString(R.string.unknown_date) //TODO what to do with context... Inject?
-    }
-
-    private fun setPictureUrl(picturePath: String): String =
-            "${ApiConstants.BASE_URL_IMAGE}${ApiConstants.IMAGE_SIZE_W342}$picturePath"
 
 
 }
