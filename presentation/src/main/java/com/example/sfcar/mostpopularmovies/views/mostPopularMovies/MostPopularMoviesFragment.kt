@@ -35,10 +35,8 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  *
  */
-class MostPopularMoviesFragment : BaseFragment()/*, MostPopularMoviesView*/, AdapterListOnClickListener.ViewListener {
+class MostPopularMoviesFragment : BaseFragment(), AdapterListOnClickListener.ViewListener {
 
-    //    @Inject
-//    lateinit var presenter: MostPopularMoviesPresenterImp
     @Inject
     lateinit var layoutManager: GridLayoutManager
     @Inject
@@ -97,12 +95,6 @@ class MostPopularMoviesFragment : BaseFragment()/*, MostPopularMoviesView*/, Ada
     private fun showErrorMessage(message: String?) {
         message?.let { showToastMessage(it) }
     }
-
-//    override fun bringContext(): Context = this.context!!
-
-//    override fun setItems() {
-//        setAdapter(presenter.model)
-//    }
 
     private fun restartLastPosition() {
         (mostPopularMoviesRecyclerView.adapter as MostPopularMoviesAdapter).restartLastPosition()
