@@ -10,13 +10,14 @@ import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.glide.GlideApp
+import com.example.sfcar.mostpopularmovies.model.MovieDetailView
 import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.views.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : BaseActivity() {
 
-    private lateinit var view: MovieView
+    private lateinit var movieDetailView: MovieDetailView
 
     companion object {
         private const val EXTRA_MOVIE = "ExtraMovie"
@@ -43,12 +44,12 @@ class MovieDetailActivity : BaseActivity() {
     }
 
     private fun getMovieExtra(): MovieView {
-        view = intent.getParcelableExtra(EXTRA_MOVIE)
-        return view
+        movieDetailView = intent.getParcelableExtra(EXTRA_MOVIE)
+        return movieDetailView
     }
 
     override fun setToolbarTitle() {
-        collapsingToolbar.title = view.title
+        collapsingToolbar.title = movieDetailView.title
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -76,9 +77,9 @@ class MovieDetailActivity : BaseActivity() {
     }
 
     private fun setToolbarImage() {
-        if (view.picturePath != "") {
+        if (movieDetailView.picturePath != "") {
             GlideApp.with(this)
-                    .load(view.picturePath)
+                    .load(movieDetailView.picturePath)
                     .apply(RequestOptions().centerInside())
                     .apply(RequestOptions().placeholder(R.drawable.ic_movie_placeholder))
                     .into(movieBackdrop as ImageView)

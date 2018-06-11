@@ -3,23 +3,17 @@ package com.example.sfcar.mostpopularmovies.model
 import android.os.Parcel
 import android.os.Parcelable
 
-open class MovieView(var title: String = "",
-                     var releaseDate: String = "",
-                     var overview: String = "",
+open class MovieView(var id: Int = 0,
                      var picturePath: String = "") : BaseMovieView(), Parcelable {
     constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString(),
-            source.readString(),
+            source.readInt(),
             source.readString()
     )
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(title)
-        writeString(releaseDate)
-        writeString(overview)
+        writeInt(id)
         writeString(picturePath)
     }
 

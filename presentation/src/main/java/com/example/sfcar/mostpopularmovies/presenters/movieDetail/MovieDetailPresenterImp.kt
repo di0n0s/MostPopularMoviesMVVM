@@ -1,16 +1,16 @@
 package com.example.sfcar.mostpopularmovies.presenters.movieDetail
 
 import com.example.sfcar.mostpopularmovies.injector.PerFragment
-import com.example.sfcar.mostpopularmovies.model.MovieView
+import com.example.sfcar.mostpopularmovies.model.MovieDetailView
 import javax.inject.Inject
 
 @PerFragment
 class MovieDetailPresenterImp @Inject constructor() : MovieDetailPresenter {
 
-    lateinit var movieView: MovieView
+    lateinit var movieDetailView: MovieDetailView
 
-    override fun setModel(model: MovieView) {
-        this.movieView = model
+    override fun setModel(model: MovieDetailView) {
+        this.movieDetailView = model
     }
 
     override fun start() {}

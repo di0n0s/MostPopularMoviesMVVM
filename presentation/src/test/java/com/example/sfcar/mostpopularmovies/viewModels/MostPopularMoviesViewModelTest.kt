@@ -4,10 +4,7 @@ import com.example.sfcar.mostpopularmovies.UnitTest
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.GetPopularMoviesUseCase
 import com.example.sfcar.mostpopularmovies.domain.interactor.usecase.SearchMoviesUseCase
 import com.example.sfcar.mostpopularmovies.model.BaseMovieView
-import com.example.sfcar.mostpopularmovies.viewModels.MostPopularMoviesViewModel
-import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesView
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import org.junit.Before
 import org.junit.Test

@@ -6,6 +6,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.sfcar.mostpopularmovies.R
+import com.example.sfcar.mostpopularmovies.model.MovieDetailView
 import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.views.movieDetail.MovieDetailActivity
 import javax.inject.Inject

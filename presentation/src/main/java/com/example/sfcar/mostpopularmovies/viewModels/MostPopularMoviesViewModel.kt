@@ -44,14 +44,14 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
         movies.addAll(mapToViewModel(movieList))
         removeFooter()
         addFooter()
-        setMutableLiveData()
+        setMutableLiveDataValue()
     }
 
     private fun mapToViewModel(movieList: MovieListPagination) =
-            movieList.movieList.map { MovieView(it.title,
-                    MovieListPaginationViewMapper().setYearString(it.releaseDate),
-                    it.overview,
-                    MovieListPaginationViewMapper().setPictureUrl(it.picturePath)) }
+            movieList.movieList.map {
+                MovieView(it.id,
+                        MovieListPaginationViewMapper().setPictureUrl(it.picturePath))
+            }
 
 
     private fun loadData() {
@@ -98,7 +98,7 @@ class MostPopularMoviesViewModel @Inject constructor(private val popularMoviesUs
         movies.removeAll { it is FooterMovieView }
     }
 
-    private fun setMutableLiveData() {
+    private fun setMutableLiveDataValue() {
         model.value = movies
     }
 }

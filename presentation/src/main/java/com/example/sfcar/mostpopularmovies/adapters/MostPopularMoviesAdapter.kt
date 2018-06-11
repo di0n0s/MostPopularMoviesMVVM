@@ -9,7 +9,7 @@ import android.view.animation.AnimationUtils
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.interfaces.AdapterListOnClickListener
 import com.example.sfcar.mostpopularmovies.model.BaseMovieView
-import com.example.sfcar.mostpopularmovies.model.MovieView
+import com.example.sfcar.mostpopularmovies.model.MovieDetailView
 import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesFooterHolder
 import com.example.sfcar.mostpopularmovies.views.mostPopularMovies.MostPopularMoviesHolder
 
@@ -36,7 +36,7 @@ class MostPopularMoviesAdapter(private val movieList: List<BaseMovieView>, priva
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MostPopularMoviesHolder -> holder.bindMovie(movieList[position] as MovieView)
+            is MostPopularMoviesHolder -> holder.bindMovie(movieList[position] as MovieDetailView)
             is MostPopularMoviesFooterHolder -> holder.bindProgressBar()
         }
         setAnimation(holder.itemView, position)
@@ -44,7 +44,7 @@ class MostPopularMoviesAdapter(private val movieList: List<BaseMovieView>, priva
 
     override fun getItemViewType(position: Int): Int =
             when (movieList[position]) {
-                is MovieView -> MOVIE_TYPE
+                is MovieDetailView -> MOVIE_TYPE
                 else -> FOOTER_TYPE
             }
 

@@ -22,6 +22,7 @@ import com.example.sfcar.mostpopularmovies.injector.modules.MostPopularMoviesMod
 import com.example.sfcar.mostpopularmovies.interfaces.AdapterListOnClickListener
 import com.example.sfcar.mostpopularmovies.interfaces.MostPopularMoviesActivityListener
 import com.example.sfcar.mostpopularmovies.model.BaseMovieView
+import com.example.sfcar.mostpopularmovies.model.MovieDetailView
 import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.model.enumerations.EmptyViewModel
 import com.example.sfcar.mostpopularmovies.model.enumerations.ErrorEnum

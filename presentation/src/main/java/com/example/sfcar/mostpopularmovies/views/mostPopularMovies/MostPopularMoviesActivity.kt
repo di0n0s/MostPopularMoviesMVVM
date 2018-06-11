@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.sfcar.mostpopularmovies.R
 import com.example.sfcar.mostpopularmovies.interfaces.MostPopularMoviesActivityListener
+import com.example.sfcar.mostpopularmovies.model.MovieDetailView
 import com.example.sfcar.mostpopularmovies.model.MovieView
 import com.example.sfcar.mostpopularmovies.views.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_base.*
